@@ -8,8 +8,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 public class CustomDate {
 
   protected int day, month, year;
-  public static final int LILIAN_DAY = 1583; // 15-Oct-1583
-  public static final LocalDate LILIAN_DATE = LocalDate.of(1583, 10, 15);
+  public static final int LILIAN_DAY = 1583;
+  public static final LocalDate LILIAN_DATE = LocalDate.of(1583, 10, 14);
 
   public CustomDate(int year, int month, int day) {
     this.year = year;
@@ -56,9 +56,10 @@ public class CustomDate {
   }
 
   @Override
-  public boolean equals(Object otherDate) {
-    if (otherDate instanceof CustomDate) {
-      return this.getYear() == otherDate.getDay() && this.getMonth() == otherDate.getMonth() && this.getDay() == otherDate.getDay();
+  public boolean equals(Object obj) {
+    if (obj instanceof CustomDate) {
+      CustomDate dateParam = (CustomDate) obj;
+      return this.getYear() == dateParam.getDay() && this.getMonth() == dateParam.getMonth() && this.getDay() == dateParam.getDay();
     }
     return false;
   }
