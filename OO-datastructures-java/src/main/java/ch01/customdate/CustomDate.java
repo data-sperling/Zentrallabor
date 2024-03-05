@@ -1,13 +1,15 @@
 package ch01.customdate;
 
 import java.time.LocalDate;
+import java.time.temporal.UnsupportedTemporalTypeException;
+
 import static java.time.temporal.ChronoUnit.DAYS;
 
 public class CustomDate {
 
   protected int day, month, year;
-  public static final int LILIAN_DAY = 1582; // 15-Oct-1582
-  public static final LocalDate LILIAN_DATE = LocalDate.of(1582, 10, 15);
+  public static final int LILIAN_DAY = 1583; // 15-Oct-1583
+  public static final LocalDate LILIAN_DATE = LocalDate.of(1583, 10, 15);
 
   public CustomDate(int year, int month, int day) {
     this.year = year;
@@ -19,16 +21,45 @@ public class CustomDate {
   public int getMonth() { return this.month; }
   public int getYear() { return this.year; }
 
+  /*
+  Determine lilian days from this class instance
+  @return: lilian days between LILIAN_DATE and this instance
+   */
   public int lilian() {
-    int days = 0;
-    if(days>=0 && days<2147483647 ) {
-      days = (int) (DAYS.between(LILIAN_DATE, LocalDate.of(
-          this.year,
-          this.month,
-          this.day) )) ;
-    } else {
-      throw new IllegalArgumentException("integer days: " + days + " too large");
+    LocalDate thisDate = LocalDate.of(this.year, this.month, this.day);
+    if(thisDate.isBefore(LILIAN_DATE)) {
+      throw new IllegalArgumentException("Error: this date must NOT postdate lilian temporal origin of 15th October 1583");
     }
-    return days;
+    return (int) DAYS.between(LocalDate.of(this.year, this.month, this.day), LILIAN_DATE);
+  }
+
+  /*
+  Determine arbitrary lilian days for given date
+  @param toInclusive: LocalDate marking end of period for which lilian days are computed
+  @return: whole number of lilian days since LILIAN_DATE
+   */
+  public int lilian(LocalDate toInclusive) {
+    if (toInclusive.isBefore(LILIAN_DATE)) {
+      throw new IllegalArgumentException("Error: input date must NOT postdate lilian temporal origin of 15th October 1583");
+    }
+    return (int) DAYS.between(toInclusive, LILIAN_DATE);
+  }
+
+  @Override
+  public String toString() {
+   return day + "-" + month + "-" + year;
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) Integer.valueOf(day).hashCode() * Integer.valueOf(month).hashCode() * Integer.valueOf(year).hashCode();
+  }
+
+  @Override
+  public boolean equals(Object otherDate) {
+    if (otherDate instanceof CustomDate) {
+      return this.getYear() == otherDate.getDay() && this.getMonth() == otherDate.getMonth() && this.getDay() == otherDate.getDay();
+    }
+    return false;
   }
 }

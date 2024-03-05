@@ -1,11 +1,9 @@
-package ch01;
-
-import ch01.customdate.CustomDate;
+package ch01.customdate;
 
 import java.time.LocalDate;
 
 public class CustomDateClient {
-  CustomDate myDate = new CustomDate(
+  CustomDate today = new CustomDate(
       LocalDate.now().getYear(),
       LocalDate.now().getMonthValue(),
       LocalDate.now().getDayOfMonth());
@@ -14,5 +12,6 @@ public class CustomDateClient {
 
 
   public static void main(String[] args) {
+
   }
 }
