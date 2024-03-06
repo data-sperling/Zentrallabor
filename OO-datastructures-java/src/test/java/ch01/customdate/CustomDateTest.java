@@ -9,10 +9,7 @@ import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,14 +40,18 @@ class CustomDateTest {
   extract to private helper method // TODO
    */
   public static void main(String[] args) {
-    String path = "src/test/resources";
+    String path = "src/test/resources/customdate";
     File file = new File(path);
     String absPath = file.getAbsolutePath();
     System.out.println(absPath);
     try {
-      FileReader fr = new FileReader(absPath);
-
-
+      FileReader fr = new FileReader(absPath.concat("/test_read.txt"));
+      System.out.println(fr);
+      BufferedReader br = new BufferedReader(fr);
+      String line;
+      while( (line=br.readLine()) != null) {
+        System.out.println(line);
+      }
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
