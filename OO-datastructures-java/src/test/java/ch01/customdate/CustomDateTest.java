@@ -40,7 +40,7 @@ class CustomDateTest {
   extract to private helper method // TODO
    */
   public static void main(String[] args) {
-    String path = "src/test/resources/customdate";
+    String path = "src/test/resources/customdate ";
     File file = new File(path);
     String absPath = file.getAbsolutePath();
     System.out.println(absPath);
