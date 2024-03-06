@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 
@@ -23,8 +24,6 @@ class CustomDateTest {
       fileReader = new FileReader("known_lilians.json");
     } catch (FileNotFoundException fnfe) {
       fnfe.printStackTrace();
-    } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 
@@ -34,20 +33,28 @@ class CustomDateTest {
       Object obj = jsonParser.parse(fileReader);
       JSONArray jsonArray = (JSONArray) obj;
       System.out.println(jsonArray);
-    } catch (org.json.simple.parser.ParseException pe) {
+    } catch (ParseException | IOException pe) {
       pe.printStackTrace();
+    }
+  }
+  /*
+  try this to read relative path from abs
+  class path resources not found
+  extract to private helper method // TODO
+   */
+  public static void main(String[] args) {
+    String path = "src/test/resources";
+    File file = new File(path);
+    String absPath = file.getAbsolutePath();
+    System.out.println(absPath);
+    try {
+      FileReader fr = new FileReader(absPath);
+
+
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
   }
-public static void main(String[] args) {
-  try {
-    CustomDateTest cdt = new CustomDateTest();
-    cdt.getClass().getResource("test_read.txt");
-    System.out.println(cdt.getClass().getResource("test_read.txt"));
-  } catch(IOException ioe) {
-    ioe.printStackTrace();
-  }
 
 }
-}
+
