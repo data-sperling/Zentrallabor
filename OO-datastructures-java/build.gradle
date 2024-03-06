@@ -14,10 +14,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
     implementation 'org.json:json:20231013'
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+
+    test {
+        useJUnitPlatform()
+    }
+
+
 }
-
-test {
-    useJUnitPlatform()
-}
-
-
