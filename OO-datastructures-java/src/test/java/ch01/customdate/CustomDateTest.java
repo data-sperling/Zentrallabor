@@ -45,7 +45,7 @@ class CustomDateTest {
     String absPath = file.getAbsolutePath();
     System.out.println(absPath);
     try {
-      FileReader fr = new FileReader(absPath.concat("/test_read.txt"));
+      FileReader fr = new FileReader(absPath.concat(" /test_read.txt"));
       System.out.println(fr);
       BufferedReader br = new BufferedReader(fr);
       String line;
