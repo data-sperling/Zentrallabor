@@ -31,7 +31,15 @@ const EXPERIMENTS = [
     report: '/reports/genomic-analysis-01-26-10-04.pdf',
   },
   {
-    id: 2, title: 'Absorption spectrum', subtitle: 'Wavelength response', code: 'EXP-002', description: 'Identify the reference spectrum that best matches the experimental measurement.', correct: 0, shape: 'peak', report: '/reports/experiment-2-report.pdf' },
+    id: 2,
+    title: 'Microbial Reaction Nr: 02-26/10/04',
+    subtitle: 'Exponential decay',
+    code: 'EXP-002',
+    description: 'Use fluorescence measurements and exponential decay to estimate the remaining pigment.',
+    correct: 0,
+    shape: 'decay',
+    report: '/reports/experiment-2-report.pdf'
+  },
   { id: 3, title: 'Cooling profile', subtitle: 'Thermal decay', code: 'EXP-003', description: 'Compare the measured cooling profile against four reference models.', correct: 3, shape: 'decay', report: '/reports/experiment-3-report.pdf' },
   { id: 4, title: 'Growth curve', subtitle: 'Population over time', code: 'EXP-004', description: 'Find the standard growth model that corresponds to the sample data.', correct: 1, shape: 'growth', report: '/reports/experiment-4-report.pdf' },
   { id: 5, title: 'Oscillation test', subtitle: 'Periodic response', code: 'EXP-005', description: 'Match the sample oscillation against the available reference curves.', correct: 2, shape: 'wave', report: '/reports/experiment-5-report.pdf' },
@@ -145,6 +153,303 @@ function Graph({ exp, variant, sample = false, compact = false }) {
   )
 }
 
+
+function Experiment2View() {
+  const [fluorescence, setFluorescence] = useState([])
+  const [decay, setDecay] = useState([])
+  const [error, setError] = useState(false)
+  const [answer, setAnswer] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+
+    async function loadData() {
+      try {
+        const [fluorResponse, decayResponse] = await Promise.all([
+          fetch(`${import.meta.env.BASE_URL}graphs/sample-02-26-10-04/sample_470nm_fluor.csv`),
+          fetch(`${import.meta.env.BASE_URL}graphs/sample-02-26-10-04/sample_510nm_fluor_decay.csv`),
+        ])
+
+        if (!fluorResponse.ok || !decayResponse.ok) {
+          throw new Error('Could not load Experiment 2 CSV files')
+        }
+
+        const [fluorText, decayText] = await Promise.all([
+          fluorResponse.text(),
+          decayResponse.text(),
+        ])
+
+        function parseCsv(text) {
+          const rows = text.trim().replace(/^\uFEFF/, '').split(/\r?\n/)
+          const headers = rows[0].split(',').map(h => h.trim())
+
+          return rows.slice(1).filter(Boolean).map(row => {
+            const values = row.split(',')
+            return Object.fromEntries(
+                headers.map((header, i) => [header, Number(values[i])])
+            )
+          })
+        }
+
+        const fluorRows = parseCsv(fluorText)
+        const decayRows = parseCsv(decayText)
+
+        if (
+            !fluorRows.length ||
+            !decayRows.length ||
+            !('time_hours' in fluorRows[0]) ||
+            !('fluorescence_intensity_au' in fluorRows[0]) ||
+            !('ln_normalised_fluorescence' in decayRows[0])
+        ) {
+          throw new Error('Unexpected CSV column names')
+        }
+
+        if (!cancelled) {
+          setFluorescence(fluorRows)
+          setDecay(decayRows)
+        }
+      } catch (err) {
+        if (!cancelled) setError(true)
+      }
+    }
+
+    loadData()
+    return () => { cancelled = true }
+  }, [])
+
+  if (error) {
+    return (
+        <section className="panel experiment2-panel">
+          <h2>Experiment data unavailable</h2>
+          <p>Check that both CSV files are in the public directory
+            and that their column names match the expected format.</p>
+        </section>
+    )
+  }
+
+  if (!fluorescence.length || !decay.length) {
+    return <section className="panel experiment2-panel">
+      <p>Loading Experiment 2 data…</p>
+    </section>
+  }
+
+  return (
+      <section className="experiment2-layout">
+        <div className="panel experiment2-panel">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-index">01</span>
+              <h2>Fluorescence over time</h2>
+            </div>
+            <span className="sample-tag">SIMULATED DATA</span>
+          </div>
+
+          <p className="panel-description">
+            Excitation: 470 nm. Fluorescence emission measured at 510 nm.
+            Follow the signal as the simulated pigment degrades.
+          </p>
+
+          <div className="experiment2-chart">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={fluorescence}
+                         margin={{ top: 12, right: 20, left: 5, bottom: 12 }}>
+                <CartesianGrid stroke="#e9ebf3" strokeDasharray="3 5" />
+                <XAxis dataKey="time_hours" type="number"
+                       domain={[0, 48]} tickCount={7}
+                       label={{ value: 'Time (hours)', position: 'insideBottom', offset: -5 }} />
+                <YAxis
+                    label={{ value: 'Fluorescence (AU)', angle: -90, position: 'insideLeft' }} />
+                <Tooltip
+                    labelFormatter={v => `Time: ${v} h`}
+                    formatter={v => [Number(v).toFixed(2), 'Intensity (AU)']} />
+                <Line dataKey="fluorescence_intensity_au"
+                      name="Fluorescence intensity"
+                      stroke="#5b67e8" strokeWidth={2.5}
+                      dot={{ r: 3 }} isAnimationActive={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="panel experiment2-panel">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-index">02</span>
+              <h2>Log-normalised decay</h2>
+            </div>
+          </div>
+
+          <p className="panel-description">
+            Taking the natural logarithm transforms exponential decay
+            into a straight line.
+          </p>
+
+          <div className="experiment2-chart">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={decay}
+                         margin={{ top: 12, right: 20, left: 5, bottom: 12 }}>
+                <CartesianGrid stroke="#e9ebf3" strokeDasharray="3 5" />
+                <XAxis dataKey="time_hours" type="number"
+                       domain={[0, 48]} tickCount={7}
+                       label={{ value: 'Time (hours)', position: 'insideBottom', offset: -5 }} />
+                <YAxis
+                    label={{ value: 'ln(At / A0)', angle: -90, position: 'insideLeft' }} />
+                <Tooltip
+                    labelFormatter={v => `Time: ${v} h`}
+                    formatter={v => [Number(v).toFixed(4), 'ln(At / A0)']} />
+                <Line dataKey="ln_normalised_fluorescence"
+                      name="Log-normalised fluorescence"
+                      stroke="#36a58a" strokeWidth={2.5}
+                      dot={{ r: 3 }} isAnimationActive={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div className="panel experiment2-panel maths-panel">
+          <div className="panel-heading">
+            <div>
+              <span className="panel-index">03</span>
+              <h2>Use the decay equation</h2>
+            </div>
+          </div>
+
+          <p>For first-order exponential decay:</p>
+          <div className="equation">
+            A<sub>t</sub> = A<sub>0</sub> e<sup>−kt</sup>
+          </div>
+
+          <p>Divide by the initial signal A<sub>0</sub>:</p>
+          <div className="equation">
+            A<sub>t</sub> / A<sub>0</sub> = e<sup>−kt</sup>
+          </div>
+
+          <p>Take the natural logarithm of both sides:</p>
+          <div className="equation">
+            ln(A<sub>t</sub> / A<sub>0</sub>) = −kt
+          </div>
+
+          <p>
+            This has the straight-line form <strong>y = mx + c</strong>,
+            where y = ln(A<sub>t</sub> / A<sub>0</sub>), x = t,
+            the gradient m = −k, and c = 0 for ideal normalised data.
+          </p>
+
+          <div className="equation">
+            k = ln(2) / 12 ≈ 0.05776 h<sup>−1</sup>
+          </div>
+
+          <p>
+            Use the gradient or the graph to estimate the remaining
+            fluorescence after 24 hours. Under this model, fluorescence
+            is proportional to the amount of intact pigment.
+          </p>
+
+          <h3>How much remains after 24 hours?</h3>
+          <div className="answer-options experiment2-options">
+            {[25, 50, 75, 100].map(value => (
+                <button key={value}
+                        className={`answer-option ${
+                            answer === value
+                                ? value === 25 ? 'answer-correct' : 'answer-wrong'
+                                : ''
+                        }`}
+                        onClick={() => setAnswer(value)}>
+                  <span className="answer-letter">{value}%</span>
+                  <span>{value}% remaining</span>
+                </button>
+            ))}
+          </div>
+
+          {answer !== null && (
+              <p className={answer === 25
+                  ? 'feedback success-feedback'
+                  : 'feedback error-feedback'}>
+                {answer === 25
+                    ? 'Correct. Two 12-hour half-lives have elapsed, so 25% remains.'
+                    : 'Not quite. Check how many 12-hour half-lives fit into 24 hours.'}
+              </p>
+          )}
+        </div>
+      </section>
+  )
+}
+
+
+function FluorescenceThumbnail() {
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    fetch(
+        `${import.meta.env.BASE_URL}graphs/sample-02-26-10-04/sample_470nm_fluor.csv`
+    )
+        .then(response => {
+          if (!response.ok) throw new Error('Could not load fluorescence data')
+          return response.text()
+        })
+        .then(csv => {
+          const rows = csv.trim().replace(/^\uFEFF/, '').split(/\r?\n/)
+          const headers = rows[0].split(',').map(h => h.trim())
+          const xIndex = headers.indexOf('time_hours')
+          const yIndex = headers.indexOf('fluorescence_intensity_au')
+
+          if (xIndex < 0 || yIndex < 0) {
+            throw new Error('Unexpected CSV headers')
+          }
+
+          setData(
+              rows.slice(1)
+                  .filter(row => row.trim())
+                  .map(row => {
+                    const columns = row.split(',')
+                    return {
+                      x: Number(columns[xIndex]),
+                      y: Number(columns[yIndex]),
+                    }
+                  })
+                  .filter(point =>
+                      Number.isFinite(point.x) && Number.isFinite(point.y)
+                  )
+          )
+        })
+        .catch(error => console.error(error))
+  }, [])
+
+  if (!data.length) return <div className="graph graph-compact" />
+
+  return (
+      <div className="graph graph-compact">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
+            <CartesianGrid
+                stroke="#e9ebf3"
+                strokeDasharray="3 5"
+                vertical={false}
+            />
+            <XAxis dataKey="x" hide />
+            <YAxis hide domain={['auto', 'auto']} />
+            <Area
+                type="monotone"
+                dataKey="y"
+                stroke="none"
+                fill="#e5a14b"
+                fillOpacity={0.16}
+                isAnimationActive={false}
+            />
+            <Line
+                type="monotone"
+                dataKey="y"
+                stroke="#e5a14b"
+                strokeWidth={2.5}
+                dot={false}
+                isAnimationActive={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+  )
+}
+
 function App() {
   const [selectedId, setSelectedId] = useState(null)
   const [activeStandard, setActiveStandard] = useState(0)
@@ -212,22 +517,54 @@ function App() {
                 </div>
               </div>
 
+              ```jsx
               <section className="experiment-section">
                 <div className="section-heading">
-                  <div><div className="section-kicker">YOUR WORKSPACE</div><h2>Choose an experiment</h2></div>
-                  <span className="section-count">05 AVAILABLE <span>↗</span></span>
+                  <div>
+                    <div className="section-kicker">YOUR WORKSPACE</div>
+                    <h2>Choose an experiment</h2>
+                  </div>
+                  <span className="section-count">
+      05 AVAILABLE <span>↗</span>
+    </span>
                 </div>
+
                 <div className="experiment-grid">
                   {EXPERIMENTS.map((item, i) => (
-                      <button className="experiment-card" key={item.id} onClick={() => openExperiment(item.id)}>
-                        <div className="card-top"><span className="experiment-index">0{item.id}</span><span className="card-arrow"><ArrowRight size={17} /></span></div>
-                        <div className="mini-graph"><Graph exp={item} variant={i % 4} compact /></div>
-                        <div className="card-content"><h3>{item.title}</h3><p>{item.subtitle}</p></div>
-                        <div className="card-bottom"><span>{item.code}</span><span className="start-link">Start exercise <ArrowRight size={13} /></span></div>
+                      <button
+                          className="experiment-card"
+                          key={item.id}
+                          onClick={() => openExperiment(item.id)}
+                      >
+                        <div className="card-top">
+                          <span className="card-code">{item.code}</span>
+                          <span className="card-number">
+            {String(item.id).padStart(2, '0')}
+          </span>
+                        </div>
+
+                        <div className="mini-graph">
+                          {item.id === 2 ? (
+                              <FluorescenceThumbnail />
+                          ) : (
+                              <Graph exp={item} variant={i % 4} compact />
+                          )}
+                        </div>
+
+                        <div className="card-content">
+                          <h3>{item.title}</h3>
+                          <p>{item.subtitle}</p>
+                        </div>
+
+                        <div className="card-footer">
+                          <span>Open experiment</span>
+                          <ArrowRight size={16} />
+                        </div>
                       </button>
                   ))}
                 </div>
               </section>
+              ```
               <footer className="landing-footer"><span>GRAPHLAB / DATA INTERPRETATION SUITE</span><span>Sample curves for demonstration</span></footer>
             </main>
         ) : (
@@ -238,6 +575,9 @@ function App() {
                 <div className="progress-chip"><span className="progress-number">0{exp.id}</span><span className="progress-slash">/</span><span>05 experiments</span></div>
               </div>
 
+              {exp.id === 2 ? (
+                  <Experiment2View />
+              ) : (
               <div className="comparison-layout">
                 <section className="panel sample-panel">
                   <div className="panel-heading"><div><span className="panel-index">01</span><h2>Experimental sample</h2></div><span className="sample-tag">UNKNOWN</span></div>
@@ -283,7 +623,7 @@ function App() {
                     )}
                   </div>
                 </section>
-              </div>
+              </div>)}
               <footer className="workspace-footer"><span>GRAPHLAB / {exp.code}</span><button onClick={goHome}>Exit experiment <ArrowRight size={13} /></button></footer>
             </main>
         )}
