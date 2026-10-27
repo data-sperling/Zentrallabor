@@ -29,7 +29,7 @@ const EXPERIMENTS = [
       `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/tomato.csv`,
     ],
     correct: 3,
-    report: `${import.meta.env.BASE_URL}reports/genomic-analysis-01-26-10-04.pdf`,
+    report: `${import.meta.env.BASE_URL}reports/Bericht-01.pdf`,
   },
   {
     id: 2,
