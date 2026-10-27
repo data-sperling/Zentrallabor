@@ -12,38 +12,63 @@ import './styles.css'
 
 const COLORS = ['#5b67e8', '#e5a14b', '#36a58a', '#d36d88', '#8a68c7']
 
-// Experiment 1 uses real CSV files. Experiments 2–5 still use demo curves.
+
 const EXPERIMENTS = [
-  { id: 1,
+  {
+    id: 1,
     title: 'Genomic Analysis Nr: 01-26/10/04',
     subtitle: 'Genomic fragment analysis',
-    code: 'EXP-001',
-    description: 'Compare the sample signal against the available reference curves.',
-    sampleGraph: '/graphs/sample-01-26-10-04/sample.csv',
+    code: 'EXP-01-26/10/04',
+    description: 'Vergleichen Sie das Probensignal mit den verfügbaren Referenzkurven.',
+    sampleGraph: `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/sample.csv`,
     standards: [
-      '/graphs/sample-01-26-10-04/quinoa.csv',
-      '/graphs/sample-01-26-10-04/spinach.csv',
-      '/graphs/sample-01-26-10-04/thale_cress.csv',
-      '/graphs/sample-01-26-10-04/red_beetroot.csv',
-      '/graphs/sample-01-26-10-04/tomato.csv',
+      `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/quinoa.csv`,
+      `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/spinach.csv`,
+      `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/thale_cress.csv`,
+      `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/red_beetroot.csv`,
+      `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/tomato.csv`,
     ],
     correct: 3,
-    report: '/reports/genomic-analysis-01-26-10-04.pdf',
+    report: `${import.meta.env.BASE_URL}reports/genomic-analysis-01-26-10-04.pdf`,
   },
   {
     id: 2,
     title: 'Microbial Reaction Nr: 02-26/10/04',
     subtitle: 'Exponential decay',
-    code: 'EXP-002',
-    description: 'Use fluorescence measurements and exponential decay to estimate the remaining pigment.',
+    code: 'EXP-02-26/10/04',
+    description: 'Verwenden Sie Fluoreszenzmessungen und exponentiellen Abfall, um das verbleibende Pigment abzuschätzen.',
     correct: 0,
     shape: 'decay',
-    report: '/reports/experiment-2-report.pdf'
+    report: `${import.meta.env.BASE_URL}reports/microbial-reaction-02-26-10-04.pdf`,
   },
-  { id: 3, title: 'Cooling profile', subtitle: 'Thermal decay', code: 'EXP-003', description: 'Compare the measured cooling profile against four reference models.', correct: 3, shape: 'decay', report: '/reports/experiment-3-report.pdf' },
-  { id: 4, title: 'Growth curve', subtitle: 'Population over time', code: 'EXP-004', description: 'Find the standard growth model that corresponds to the sample data.', correct: 1, shape: 'growth', report: '/reports/experiment-4-report.pdf' },
-  { id: 5, title: 'Oscillation test', subtitle: 'Periodic response', code: 'EXP-005', description: 'Match the sample oscillation against the available reference curves.', correct: 2, shape: 'wave', report: '/reports/experiment-5-report.pdf' },
+  { id: 3,
+    title: 'Cooling profile',
+    subtitle: 'Thermal decay', code: 'EXP-003',
+    description: 'Compare the measured cooling profile against four reference models.',
+    correct: 3, shape: 'decay',
+    report: '/reports/experiment-3-report.pdf'
+  },
+  { id: 4,
+    title: 'Growth curve',
+    subtitle: 'Population over time',
+    code: 'EXP-004',
+    description: 'Find the standard growth model that corresponds to the sample data.',
+    correct: 1,
+    shape: 'growth',
+    report: '/reports/experiment-4-report.pdf'
+  },
+  { id: 5,
+    title: 'Oscillation test',
+    subtitle: 'Periodic response',
+    code: 'EXP-005',
+    description: 'Match the sample oscillation against the available reference curves.',
+    correct: 2,
+    shape: 'wave',
+    report: '/reports/experiment-5-report.pdf'
+  },
 ]
+
+const VISIBLE_EXPERIMENT_IDS = [1, 2]
 
 function curve(shape, x, variant = 0, sample = false) {
   const noise = sample ? (Math.sin(x * 3.7) + Math.cos(x * 1.3)) * 0.025 : 0
@@ -58,7 +83,7 @@ function buildData(exp, variant, sample = false) {
   return Array.from({ length: 25 }, (_, i) => {
     const x = i * 0.5
     let y = curve(exp.shape, x, variant, sample)
-    // For the correct standard, use the same underlying profile as the sample but without noise.
+
     if (!sample && variant === exp.correct) y = curve(exp.shape, x, exp.correct, false)
     return { x, y: Math.max(0.03, Math.min(1.05, y)) }
   })
@@ -130,7 +155,7 @@ function Graph({ exp, variant, sample = false, compact = false }) {
   const data = useMemo(() => buildData(exp, variant, sample), [exp, variant, sample])
   const csvPath = sample ? exp.sampleGraph : exp.standards?.[variant]
 
-  // Use real CSV data when this experiment has file paths; retain demo graphs for the others.
+
   if (csvPath) return <CsvGraph src={csvPath} variant={variant} sample={sample} compact={compact} />
 
   return (
@@ -239,14 +264,14 @@ function Experiment2View() {
           <div className="panel-heading">
             <div>
               <span className="panel-index">01</span>
-              <h2>Fluorescence over time</h2>
+              <h2>Fluoreszenz im Laufe der Zeit</h2>
             </div>
             <span className="sample-tag">SIMULATED DATA</span>
           </div>
 
           <p className="panel-description">
-            Excitation: 470 nm. Fluorescence emission measured at 510 nm.
-            Follow the signal as the simulated pigment degrades.
+            Anregung: 470 nm. Fluoreszenzemission gemessen bei 510 nm.
+            Folgen Sie dem Signal, während das simulierte Pigment abgebaut wird.
           </p>
 
           <div className="experiment2-chart">
@@ -275,13 +300,14 @@ function Experiment2View() {
           <div className="panel-heading">
             <div>
               <span className="panel-index">02</span>
-              <h2>Log-normalised decay</h2>
+              <h2>Logarithmisch normalisierter Zerfall</h2>
             </div>
           </div>
 
           <p className="panel-description">
-            Taking the natural logarithm transforms exponential decay
-            into a straight line.
+            Durch die Verwendung des natürlichen Logarithmus wird der exponentielle Zerfall in eine gerade Linie umgewandelt.
+
+
           </p>
 
           <div className="experiment2-chart">
@@ -310,29 +336,29 @@ function Experiment2View() {
           <div className="panel-heading">
             <div>
               <span className="panel-index">03</span>
-              <h2>Use the decay equation</h2>
+              <h2>Verwenden Sie die Zerfallsgleichung</h2>
             </div>
           </div>
 
-          <p>For first-order exponential decay:</p>
+          <p>Für exponentiellen Zerfall erster Ordnung:</p>
           <div className="equation">
             A<sub>t</sub> = A<sub>0</sub> e<sup>−kt</sup>
           </div>
 
-          <p>Divide by the initial signal A<sub>0</sub>:</p>
+          <p>Teilen Sie durch das Anfangssignal A<sub>0</sub>:</p>
           <div className="equation">
             A<sub>t</sub> / A<sub>0</sub> = e<sup>−kt</sup>
           </div>
 
-          <p>Take the natural logarithm of both sides:</p>
+          <p>Nehmen Sie den natürlichen Logarithmus beider Seiten:</p>
           <div className="equation">
             ln(A<sub>t</sub> / A<sub>0</sub>) = −kt
           </div>
 
           <p>
-            This has the straight-line form <strong>y = mx + c</strong>,
-            where y = ln(A<sub>t</sub> / A<sub>0</sub>), x = t,
-            the gradient m = −k, and c = 0 for ideal normalised data.
+            Dies hat die geradlinige Form <strong>y = mx + c</strong>,
+            wo y = ln(A<sub>t</sub> / A<sub>0</sub>), x = t,
+            der Farbverlauft m = −k, and c = 0 für ideal normalisierte Daten.
           </p>
 
           <div className="equation">
@@ -340,12 +366,12 @@ function Experiment2View() {
           </div>
 
           <p>
-            Use the gradient or the graph to estimate the remaining
-            fluorescence after 24 hours. Under this model, fluorescence
-            is proportional to the amount of intact pigment.
+            Verwenden Sie den Gradienten oder die Grafik, um den Rest abzuschätzen
+            Fluoreszenz nach 24 Stunden. Bei diesem Modell handelt es sich um Fluoreszenz
+            ist proportional zur Menge des intakten Pigments.
           </p>
 
-          <h3>How much remains after 24 hours?</h3>
+          <h3>Wie viel bleibt nach 24 Stunden übrig?</h3>
           <div className="answer-options experiment2-options">
             {[25, 50, 75, 100].map(value => (
                 <button key={value}
@@ -356,19 +382,33 @@ function Experiment2View() {
                         }`}
                         onClick={() => setAnswer(value)}>
                   <span className="answer-letter">{value}%</span>
-                  <span>{value}% remaining</span>
+                  <span>{value}% verbleibend</span>
                 </button>
             ))}
           </div>
 
           {answer !== null && (
-              <p className={answer === 25
-                  ? 'feedback success-feedback'
-                  : 'feedback error-feedback'}>
-                {answer === 25
-                    ? 'Correct. Two 12-hour half-lives have elapsed, so 25% remains.'
-                    : 'Not quite. Check how many 12-hour half-lives fit into 24 hours.'}
-              </p>
+              <>
+                <p className={answer === 25
+                    ? 'feedback success-feedback'
+                    : 'feedback error-feedback'}>
+                  {answer === 25
+                      ? 'Richtig. Es sind zwei 12-Stunden-Halbwertszeiten verstrichen, sodass noch 25 % übrig sind.'
+                      : 'Nicht ganz. Überprüfen Sie, wie viele 12-Stunden-Halbwertszeiten in 24 Stunden passen.'}
+                </p>
+
+                {answer === 25 && (
+                    <a
+                        className="download-button"
+                        href={`${import.meta.env.BASE_URL}reports/microbial-reaction-02-26-10-04.pdf`}
+                        download
+                    >
+                      <Download size={17} />
+                      Analysebericht herunterladen
+                      <ArrowRight size={15} />
+                    </a>
+                )}
+              </>
           )}
         </div>
       </section>
@@ -475,7 +515,7 @@ function App() {
     setAnswer(index)
     setAttempts(n => n + 1)
   }
-  // Experiment 1 has five CSV standards; the demo experiments still have four.
+
   const standardCount = exp?.standards?.length ?? 4
   function nextStandard() { setActiveStandard(i => (i + 1) % standardCount) }
   function prevStandard() { setActiveStandard(i => (i + standardCount - 1) % standardCount) }
@@ -497,19 +537,20 @@ function App() {
         <header className="topbar">
           <button className="brand" onClick={goHome} aria-label="Go to home">
             <span className="brand-mark"><FlaskConical size={20} /></span>
-            <span>graph<span className="brand-accent">lab</span></span>
+            <span>Zentral<span className="brand-accent">labor</span></span>
           </button>
-          <div className="topbar-right"><span className="status-dot" /> Interactive lab <span className="topbar-divider">/</span> Demo environment</div>
+          <div className="topbar-right"><span className="status-dot" /> Zentrallabor <span className="topbar-divider">/</span> Benutzerdefinierte Analyse </div>
         </header>
 
         {!exp ? (
             <main className="landing">
               <div className="hero">
-                <div className="eyebrow"><Sparkles size={14} /> EXPERIMENTAL DATA EXERCISES</div>
-                <h1>Train your eye.<br /><span>Find the pattern.</span></h1>
-                <p className="hero-copy">Compare experimental results against standard curves. Find the match to unlock the full analysis report.</p>
+                <div className="eyebrow"><Sparkles size={14} /> </div>
+                <h1>Identifizieren Sie das Muster<br /></h1>
+                <p className="hero-copy">Vergleichen Sie experimentelle Ergebnisse mit Standardkurven. Finden Sie die Übereinstimmung, um den vollständigen Analysebericht freizuschalten.</p>
                 <div className="hero-stats">
-                  <div><strong>05</strong><span>Experiments</span></div>
+                  <div><strong>{String(VISIBLE_EXPERIMENT_IDS.length).padStart(2, '0')}</strong>
+                    <span>Experiments</span></div>
                   <div className="stat-rule" />
                   <div><strong>05</strong><span>Standards in Experiment 1</span></div>
                   <div className="stat-rule" />
@@ -517,7 +558,7 @@ function App() {
                 </div>
               </div>
 
-              ```jsx
+
               <section className="experiment-section">
                 <div className="section-heading">
                   <div>
@@ -525,12 +566,14 @@ function App() {
                     <h2>Choose an experiment</h2>
                   </div>
                   <span className="section-count">
-      05 AVAILABLE <span>↗</span>
-    </span>
+                    {String(VISIBLE_EXPERIMENT_IDS.length).padStart(2, '0')} AVAILABLE <span>↗</span>
+                  </span>
                 </div>
 
                 <div className="experiment-grid">
-                  {EXPERIMENTS.map((item, i) => (
+                  {EXPERIMENTS
+                      .filter(item => VISIBLE_EXPERIMENT_IDS.includes(item.id))
+                      .map((item, i) => (
                       <button
                           className="experiment-card"
                           key={item.id}
@@ -557,21 +600,24 @@ function App() {
                         </div>
 
                         <div className="card-footer">
-                          <span>Open experiment</span>
+                          <span>offenes Experiment</span>
                           <ArrowRight size={16} />
                         </div>
                       </button>
                   ))}
                 </div>
               </section>
-              ```
-              <footer className="landing-footer"><span>GRAPHLAB / DATA INTERPRETATION SUITE</span><span>Sample curves for demonstration</span></footer>
+
+              <footer className="landing-footer">
+                <span>Zentrallabor / DATA INTERPRETATION SUITE</span>
+                <span>Beispielkurven zur Identifizierung</span>
+              </footer>
             </main>
         ) : (
             <main className="workspace">
-              <button className="back-link" onClick={goHome}><ArrowLeft size={16} /> All experiments</button>
+              <button className="back-link" onClick={goHome}><ArrowLeft size={16} /> Alle Experimente</button>
               <div className="workspace-heading">
-                <div><div className="eyebrow"><span className="live-dot" /> {exp.code} <span className="eyebrow-slash">/</span> CURVE IDENTIFICATION</div><h1>{exp.title}</h1><p>{exp.description}</p></div>
+                <div><div className="eyebrow"><span className="live-dot" /> {exp.code} <span className="eyebrow-slash">/</span> </div><h1>{exp.title}</h1><p>{exp.description}</p></div>
                 <div className="progress-chip"><span className="progress-number">0{exp.id}</span><span className="progress-slash">/</span><span>05 experiments</span></div>
               </div>
 
@@ -580,17 +626,17 @@ function App() {
               ) : (
               <div className="comparison-layout">
                 <section className="panel sample-panel">
-                  <div className="panel-heading"><div><span className="panel-index">01</span><h2>Experimental sample</h2></div><span className="sample-tag">UNKNOWN</span></div>
-                  <p className="panel-description">Reference curve to compare against the standards.</p>
+                  <div className="panel-heading"><div><span className="panel-index">01</span><h2>Experimentelle Probe</h2></div><span className="sample-tag">UNKNOWN</span></div>
+                  <p className="panel-description">Referenzkurve zum Vergleich mit den Standards.</p>
                   <div className="sample-chart"><Graph exp={exp} variant={exp.correct} sample /></div>
                   <div className="chart-axis-caption"><span>{exp.sampleGraph ? 'FRAGMENT SIZE / BP' : 'TIME / X'}</span><span>{exp.sampleGraph ? 'SIGNAL INTENSITY / AU' : 'RESPONSE / Y'}</span></div>
                   <div className="sample-meta"><div><span>DATA POINTS</span><strong>{exp.sampleGraph ? 'CSV measurements' : '25 readings'}</strong></div><div><span>MEASUREMENT</span><strong>{exp.sampleGraph ? 'Signal intensity (AU)' : 'Normalized response'}</strong></div></div>
-                  <div className="hint-box"><span className="hint-icon"><Sparkles size={16} /></span><p><strong>Look for the relationship.</strong> Focus on the curve's overall shape, peak and rate of change.</p></div>
+                  <div className="hint-box"><span className="hint-icon"><Sparkles size={16} /></span><p><strong>Suchen Sie nach der Beziehung.</strong> Konzentrieren Sie sich auf die Gesamtform, den Höhepunkt und die Änderungsrate der Kurve.</p></div>
                 </section>
 
                 <section className="panel standards-panel">
-                  <div className="panel-heading"><div><span className="panel-index">02</span><h2>Standard curves</h2></div><span className="standard-count">{standardCount} OPTIONS</span></div>
-                  <p className="panel-description">Rotate through the standards, then select the one that matches the sample.</p>
+                  <div className="panel-heading"><div><span className="panel-index">02</span><h2>Standardkurven</h2></div><span className="standard-count">{standardCount} OPTIONS</span></div>
+                  <p className="panel-description">Blättern Sie durch die Standards und wählen Sie dann denjenigen aus, der zur Probe passt.</p>
 
                   <div className="carousel">
                     <button className="carousel-arrow" onClick={prevStandard} aria-label="Previous standard"><ChevronLeft size={20} /></button>
@@ -612,8 +658,8 @@ function App() {
                         <div className="success-state"><div className="success-icon"><CheckCircle2 size={22} /></div><div className="success-copy"><h3>Correct match!</h3><p>You've identified the matching standard. The full analysis is ready.</p><a className="download-button" href={exp.report} download><Download size={17} /> Download analysis report <ArrowRight size={15} /></a></div></div>
                     ) : (
                         <>
-                          <div className="answer-heading"><div><span className="panel-index">03</span><h2>Make your selection</h2></div><span className="attempts">{attempts} {attempts === 1 ? 'attempt' : 'attempts'}</span></div>
-                          <p className="panel-description">Which standard curve best matches the experimental sample?</p>
+                          <div className="answer-heading"><div><span className="panel-index">03</span><h2>Treffen Sie Ihre Auswahl</h2></div><span className="attempts">{attempts} {attempts === 1 ? 'attempt' : 'attempts'}</span></div>
+                          <p className="panel-description">Welche Standardkurve passt am besten zur experimentellen Probe?</p>
                           <div className="answer-options">
                             {Array.from({ length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
                           </div>
@@ -624,7 +670,12 @@ function App() {
                   </div>
                 </section>
               </div>)}
-              <footer className="workspace-footer"><span>GRAPHLAB / {exp.code}</span><button onClick={goHome}>Exit experiment <ArrowRight size={13} /></button></footer>
+              <footer className="workspace-footer">
+                <span>ZENTRALLABOR / {exp.code}</span>
+                <button onClick={goHome}>
+                  Exit experiment <ArrowRight size={13} />
+                </button>
+              </footer>
             </main>
         )}
       </div>
