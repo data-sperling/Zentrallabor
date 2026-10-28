@@ -135,6 +135,11 @@ figure img {
     border: 1px solid var(--line);
 }
 
+figure img.zoomed-out {
+    object-fit: contain;
+    background: white;
+}
+
 figcaption {
     padding-top: 7px;
     color: var(--muted);
