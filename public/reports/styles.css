@@ -492,7 +492,7 @@ thead th {
     }
     @media print {
         .results-section {
-            margin-bottom: 90px;
+            margin-bottom: 280px;
         }
     }
 }

@@ -30,6 +30,7 @@ const EXPERIMENTS = [
     ],
     correct: 3,
     report: `${import.meta.env.BASE_URL}reports/genomic-analysis-01-26-10-04.pdf`,
+    reportPage: `${import.meta.env.BASE_URL}reports/sample-01-26-10-04/report-01.html`,
   },
   {
     id: 2,
@@ -655,7 +656,22 @@ function App() {
 
                   <div className="answer-area">
                     {completed ? (
-                        <div className="success-state"><div className="success-icon"><CheckCircle2 size={22} /></div><div className="success-copy"><h3>Correct match!</h3><p>You've identified the matching standard. The full analysis is ready.</p><a className="download-button" href={exp.report} download><Download size={17} /> Download analysis report <ArrowRight size={15} /></a></div></div>
+                        <div className="success-state">
+                          <div className="success-icon"><CheckCircle2 size={22} /></div>
+                          <div className="success-copy">
+                            <h3>Correct match!</h3>
+                            <p>You've identified the matching standard. The full analysis is ready.</p>
+                            {exp.id === 1 ? (
+                                <a className="download-button" href={exp.reportPage}>
+                                  View analysis report <ArrowRight size={15} />
+                                </a>
+                            ) : (
+                                <a className="download-button" href={exp.report} download>
+                                  <Download size={17} /> Download analysis report <ArrowRight size={15} />
+                                </a>
+                            )}
+                          </div>
+                        </div>
                     ) : (
                         <>
                           <div className="answer-heading"><div><span className="panel-index">03</span><h2>Treffen Sie Ihre Auswahl</h2></div><span className="attempts">{attempts} {attempts === 1 ? 'attempt' : 'attempts'}</span></div>
