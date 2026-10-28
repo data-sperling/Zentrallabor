@@ -29,7 +29,7 @@ const EXPERIMENTS = [
       `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/tomato.csv`,
     ],
     correct: 3,
-    report: `${import.meta.env.BASE_URL}reports/genomic-analysis-01-26-10-04.pdf`,
+    report: `${import.meta.env.BASE_URL}reports/sample-01-26-10-04/Bericht-01.pdf`,
     reportPage: `${import.meta.env.BASE_URL}reports/sample-01-26-10-04/report-01.html`,
   },
   {
@@ -659,11 +659,11 @@ function App() {
                         <div className="success-state">
                           <div className="success-icon"><CheckCircle2 size={22} /></div>
                           <div className="success-copy">
-                            <h3>Correct match!</h3>
+                            <h3>korrekte Übereinstimmung</h3>
                             <p>You've identified the matching standard. The full analysis is ready.</p>
                             {exp.id === 1 ? (
                                 <a className="download-button" href={exp.reportPage}>
-                                  View analysis report <ArrowRight size={15} />
+                                  Analysebericht ansehen <ArrowRight size={15} />
                                 </a>
                             ) : (
                                 <a className="download-button" href={exp.report} download>

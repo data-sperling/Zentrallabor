@@ -485,7 +485,7 @@ thead th {
     }
 
     .signature {
-        margin-top: 28px;
+        margin-top: 2px;
     }
 
     .status {
@@ -521,4 +521,36 @@ thead th {
 
 .report-actions a:hover {
     background: #18364d;
+}
+
+.signature > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.signature-image {
+    height: 55px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.signature-image img {
+    display: block;
+    max-width: 180px;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    margin-left: 80px;
+    transform: translateY(60px);
+}
+
+.signature .signature-line {
+    height: 42px;
+    min-height: 42px;
+    padding-top: 7px;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--ink);
+    display: flex;
+    align-items: flex-end;
 }
