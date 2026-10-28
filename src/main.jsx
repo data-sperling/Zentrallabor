@@ -16,8 +16,8 @@ const COLORS = ['#5b67e8', '#e5a14b', '#36a58a', '#d36d88', '#8a68c7']
 const EXPERIMENTS = [
   {
     id: 1,
-    title: 'Genomic Analysis Nr: 01-26/10/04',
-    subtitle: 'Genomic fragment analysis',
+    title: 'Genomanalyse Nr: 01-26/10/04',
+    subtitle: 'Analyse genomischer Fragmente',
     code: 'EXP-01-26/10/04',
     description: 'Vergleichen Sie das Probensignal mit den verfügbaren Referenzkurven.',
     sampleGraph: `${import.meta.env.BASE_URL}graphs/sample-01-26-10-04/sample.csv`,
@@ -619,7 +619,7 @@ function App() {
               <button className="back-link" onClick={goHome}><ArrowLeft size={16} /> Alle Experimente</button>
               <div className="workspace-heading">
                 <div><div className="eyebrow"><span className="live-dot" /> {exp.code} <span className="eyebrow-slash">/</span> </div><h1>{exp.title}</h1><p>{exp.description}</p></div>
-                <div className="progress-chip"><span className="progress-number">0{exp.id}</span><span className="progress-slash">/</span><span>05 experiments</span></div>
+                <div className="progress-chip"><span className="progress-number">0{exp.id}</span><span className="progress-slash">/</span><span>05 experimenten</span></div>
               </div>
 
               {exp.id === 2 ? (
@@ -627,7 +627,7 @@ function App() {
               ) : (
               <div className="comparison-layout">
                 <section className="panel sample-panel">
-                  <div className="panel-heading"><div><span className="panel-index">01</span><h2>Experimentelle Probe</h2></div><span className="sample-tag">UNKNOWN</span></div>
+                  <div className="panel-heading"><div><span className="panel-index">01</span><h2>Experimentelle Probe</h2></div><span className="sample-tag">Probe</span></div>
                   <p className="panel-description">Referenzkurve zum Vergleich mit den Standards.</p>
                   <div className="sample-chart"><Graph exp={exp} variant={exp.correct} sample /></div>
                   <div className="chart-axis-caption"><span>{exp.sampleGraph ? 'FRAGMENT SIZE / BP' : 'TIME / X'}</span><span>{exp.sampleGraph ? 'SIGNAL INTENSITY / AU' : 'RESPONSE / Y'}</span></div>
@@ -636,7 +636,7 @@ function App() {
                 </section>
 
                 <section className="panel standards-panel">
-                  <div className="panel-heading"><div><span className="panel-index">02</span><h2>Standardkurven</h2></div><span className="standard-count">{standardCount} OPTIONS</span></div>
+                  <div className="panel-heading"><div><span className="panel-index">02</span><h2>Standardkurven</h2></div><span className="standard-count">{standardCount} Optionen</span></div>
                   <p className="panel-description">Blättern Sie durch die Standards und wählen Sie dann denjenigen aus, der zur Probe passt.</p>
 
                   <div className="carousel">
@@ -646,7 +646,7 @@ function App() {
                       <div className="standard-name-row"><div><span className="standard-dot" style={{ background: COLORS[activeStandard] }} /><h3>Standard {String.fromCharCode(65 + activeStandard)}</h3></div><span className="standard-code">REF-0{activeStandard + 1}</span></div>
                       <div className="standard-chart"><Graph exp={exp} variant={activeStandard} /></div>
                       <div className="chart-axis-caption"><span>{exp.sampleGraph ? 'FRAGMENT SIZE / BP' : 'TIME / X'}</span><span>{exp.sampleGraph ? 'SIGNAL INTENSITY / AU' : 'RESPONSE / Y'}</span></div>
-                      <div className="standard-card-bottom"><span>Reference data</span><span>{activeStandard + 1} of {standardCount}</span></div>
+                      <div className="standard-card-bottom"><span>Referenzdaten</span><span>{activeStandard + 1} of {standardCount}</span></div>
                     </div>
                     <button className="carousel-arrow" onClick={nextStandard} aria-label="Next standard"><ChevronRight size={20} /></button>
                   </div>
@@ -680,7 +680,7 @@ function App() {
                             {Array.from({ length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
                           </div>
                           {answer !== null && answer !== exp.correct && <p className="feedback error-feedback">Not quite — compare the shape and try another standard.</p>}
-                          <div className="privacy-note"><LockKeyhole size={13} /> The report unlocks when you find the correct match.</div>
+                          <div className="privacy-note"><LockKeyhole size={13} /> Der Bericht wird freigeschaltet, sobald Sie die korrekte Übereinstimmung gefunden haben.</div>
                         </>
                     )}
                   </div>
@@ -689,7 +689,7 @@ function App() {
               <footer className="workspace-footer">
                 <span>ZENTRALLABOR / {exp.code}</span>
                 <button onClick={goHome}>
-                  Exit experiment <ArrowRight size={13} />
+                  Experiment beenden <ArrowRight size={13} />
                 </button>
               </footer>
             </main>
