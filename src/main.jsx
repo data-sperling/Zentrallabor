@@ -659,7 +659,7 @@ function App() {
                           <div className="success-icon"><CheckCircle2 size={22} /></div>
                           <div className="success-copy">
                             <h3>korrekte Übereinstimmung</h3>
-                            <p>You've identified the matching standard. The full analysis is ready.</p>
+                            <p>SUPER! Sie haben die richtige Referenzprobe identifiziert</p>
                             {exp.id === 1 ? (
                                 <a className="download-button" href={exp.reportPage}>
                                   <BookOpenText size={17} />
@@ -681,7 +681,7 @@ function App() {
                             {Array.from({
                               length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
                           </div>
-                          {answer !== null && answer !== exp.correct && <p className="feedback error-feedback">Not quite — compare the shape and try another standard.</p>}
+                          {answer !== null && answer !== exp.correct && <p className="feedback error-feedback">Knapp vorbei - betrachten Sie die Kurven nochmal genauer auf verdächtige Hinweise.</p>}
                           <div className="privacy-note"><LockKeyhole size={13} /> Der Bericht wird freigeschaltet, sobald Sie die korrekte Übereinstimmung gefunden haben.</div>
                         </>
                     )}
