@@ -68,8 +68,8 @@ const EXPERIMENTS = [
     report: '/reports/experiment-5-report.pdf'
   },
 ]
-
 const VISIBLE_EXPERIMENT_IDS = [1, 2]
+const LOCKOUT_STORAGE_KEY = 'zentrallabor-lockout-until'
 
 function curve(shape, x, variant = 0, sample = false) {
   const noise = sample ? (Math.sin(x * 3.7) + Math.cos(x * 1.3)) * 0.025 : 0
@@ -399,8 +399,15 @@ function Experiment2View({ locked, onIncorrect, lockoutSeconds }) {
             ))}
           </div>
 
+          {lockoutSeconds > 0 && (
+              <p className="feedback error-feedback" role="alert">
+                Gesperrt. Versuchen Sie es erneut in{' '}
+                {Math.floor(lockoutSeconds / 60)}:
+                {String(lockoutSeconds % 60).padStart(2, '0')}.
+              </p>
+          )}
 
-          {answer !== null && (
+          {answer !== null && !(locked && lockoutSeconds > 0) && (
               <>
                 <p
                     className={
@@ -516,7 +523,23 @@ function App() {
   const [answer, setAnswer] = useState(null)
   const [attempts, setAttempts] = useState(0)
 
-  const [lockoutUntil, setLockoutUntil] = useState(0)
+
+  const [lockoutUntil, setLockoutUntil] = useState(() => {
+    try {
+      const saved = Number(
+          localStorage.getItem(LOCKOUT_STORAGE_KEY)
+      )
+
+      return Number.isFinite(saved) && saved > Date.now()
+          ? saved
+          : 0
+    } catch (error) {
+      console.error('Could not read saved lockout:', error)
+      return 0
+    }
+  })
+
+
   const [clockNow, setClockNow] = useState(Date.now())
 
   const lockoutSeconds = Math.max(
@@ -539,11 +562,20 @@ function App() {
     setAnswer(null)
     window.history.pushState({}, '', window.location.pathname)
   }
+
   function startLockout() {
     const until = Date.now() + 10 * 60 * 1000
+
+    try {
+      localStorage.setItem(LOCKOUT_STORAGE_KEY, String(until))
+    } catch (error) {
+      console.error('Could not save lockout:', error)
+    }
+
     setClockNow(Date.now())
     setLockoutUntil(until)
   }
+
   function choose(index) {
     if (completed || lockoutSeconds > 0) return
 
@@ -589,6 +621,11 @@ function App() {
       setClockNow(now)
 
       if (now >= lockoutUntil) {
+        try {
+          localStorage.removeItem(LOCKOUT_STORAGE_KEY)
+        } catch (error) {
+          console.error('Could not clear saved lockout:', error)
+        }
         setLockoutUntil(0)
       }
     }, 1000)
@@ -785,9 +822,10 @@ function App() {
                             ))}
                           </div>
 
-                          {answer !== null && answer !== exp.correct && (
+                          {lockoutSeconds > 0 && (
                               <p className="feedback error-feedback" role="alert">
-                                Fast richtig! Diese Antwort ist nicht korrekt. Versuchen Sie es erneut in {Math.floor(lockoutSeconds / 60)}:
+                                Gesperrt. Versuchen Sie es erneut in{' '}
+                                {Math.floor(lockoutSeconds / 60)}:
                                 {String(lockoutSeconds % 60).padStart(2, '0')}.
                               </p>
                           )}
