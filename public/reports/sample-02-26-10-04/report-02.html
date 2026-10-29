@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laborbericht Nr. 02 – Sensorische Auffälligkeit und mikrobielle Reaktanz</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .measurement-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .measurement-table th:first-child,
+        .measurement-table td:first-child {
+            width: 22%;
+        }
+
+        .measurement-table th:not(:first-child),
+        .measurement-table td:not(:first-child) {
+            width: 26%;
+        }
+
+        .measurement-table td,
+        .measurement-table th {
+            overflow-wrap: anywhere;
+            vertical-align: top;
+        }
+
+        .measurement-table .qualitative {
+            line-height: 1.4;
+            text-align: left;
+        }
+
+        .report-section {
+            margin-top: 1.35rem;
+        }
+
+        .report-section h2 {
+            margin-bottom: .55rem;
+        }
+
+        @media print {
+            .measurement-table {
+                font-size: 9pt;
+            }
+        }
+
+        .sample-description {
+            display: grid;
+            grid-template-columns: 30% 1fr;
+            gap: 1.5rem;
+            align-items: start;
+            width: 100%;
+        }
+
+        .sample-photo {
+            margin: 0;
+            min-width: 0;
+        }
+
+        .sample-photo img {
+            display: block;
+            width: 70%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .sample-photo figcaption {
+            margin-top: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .sample-findings {
+            min-width: 0;
+        }
+
+        @media (max-width: 600px) {
+            .sample-description {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .intensity-photo {
+            display: block;
+            width: 100%;
+            height: 140px;
+            object-fit: contain;
+            object-position: left center;
+            margin: 0 0 0.75rem;
+        }
+
+        .image-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .image-row figure {
+            margin: 0;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .image-row img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+        }
+
+        .image-row figcaption {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .image-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            .page-break-before {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+        @media print {
+            .memo {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+
+
+    </style>
+</head>
+
+<body>
+<main class="report">
+    <header class="masthead">
+        <div>
+            <div class="eyebrow">Zentrallabor · Untersuchungsakte</div>
+        </div>
+        <div class="classification">LABORBERICHT · 02</div>
+    </header>
+
+    <div class="report-actions">
+        <a href="Bericht-02.pdf" download>
+            PDF-Bericht herunterladen
+        </a>
+    </div>
+
+    <section class="report-title">
+        <h1>Sensorische Auffälligkeit und mikrobielle Reaktanz</h1>
+        <p class="subtitle">Laborbericht Nr. 02 · Sensorische und mikrobiologische Probenuntersuchung</p>
+    </section>
+
+    <section class="metadata" aria-label="Stammdaten">
+        <div><span>Probennummer</span><strong>02-26/09/20</strong></div>
+        <div><span>Probeneingang</span><strong>07. Oktober 2026</strong></div>
+        <div><span>Ermittler / Personalnummer</span><strong>CI-DRATHEN · P-6180466</strong></div>
+        <div><span>Bearbeitungsstatus</span><strong>Abgeschlossen</strong></div>
+    </section>
+
+    <section class="report-section">
+        <h2>Untersuchungsauftrag</h2>
+        <ol>
+            <li>Sensorische Prüfung im Anlieferungszustand (A) und nach thermischer Modifikation (B).</li>
+            <li>Bestimmung der mikrobiologischen Reaktanz (MBR) im MD-Trakt unter Normbedingungen sowie des OI 24 Stunden nach MBR.</li>
+        </ol>
+    </section>
+
+    <section class="report-section">
+        <h2>PROBENBESCHREIBUNG UND EINGANGSBEFUND</h2>
+
+        <div class="sample-description">
+            <figure class="sample-photo">
+                <img
+                        src="images/sample.png"
+                        alt="Probe im Anlieferungszustand"
+                >
+                <figcaption>Originalzustand der Probe</figcaption>
+            </figure>
+
+            <div class="sample-findings">
+                <h3>Eingangsbefund</h3>
+                <p>
+                    Probe präsentiert sich in einer tropfenförmigen bis
+                    kegelartigen Form. Extrem rigide und druckresistent,
+                    Gewebe leistet manuellem Druck der Prüfklasse I maximalen
+                    Widerstand; es sind keinerlei weiche, fäulnisverdächtige
+                    Degenerationsherde spürbar. Oberfläche trocken, uneben
+                    und stark strukturiert.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="report-section">
+        <h2>Methodik</h2>
+        <ul>
+            <li><strong>Probenvorbereitung:</strong> Reinigung der Knollen im Bürstenverfahren nach DIN ISO 10390 und geometrische Fraktionierung auf 10–15&nbsp;mm zur Vergrößerung der Reaktionsoberfläche.</li>
+            <li><strong>Offenes System:</strong> Flachbett-Pyrolyse unter kontinuierlicher Evaporation des Zellwassers und thermisch induzierter Maillard-Karamellisierung.</li>
+            <li><strong>Geschlossenes System:</strong> Hermetische Konvektionsthermolyse im autogenen Dampfgleichgewicht zur schonenden Zellwandhydrolyse ohne Massenverlust.</li>
+        </ul>
+    </section>
+
+    <section class="report-section page-break-before">
+        <h2>Messergebnisse</h2>
+        <table class="measurement-table">
+            <thead>
+            <tr>
+                <th scope="col">Messwert</th>
+                <th scope="col">Rohprobe</th>
+                <th scope="col">Thermische Präparation<br>Offenes System</th>
+                <th scope="col">Thermische Präparation<br>Geschlossenes System</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">pH-Wert</th>
+                <td>6,1</td>
+                <td>5,7</td>
+                <td>5,9</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    Farbintensität<br>
+                    <small>(relative Einheiten)</small>
+                </th>
+
+                <td class="qualitative">
+                    <img
+                            class="intensity-photo"
+                            src="images/neidrig-1.png"
+                            alt="Farbintensität der Rohprobe"
+                    >
+                    <strong>Niedrig · 35–45&nbsp;%</strong>
+                    <br>
+                    Sanftes, pastelliges Sonnenblumengelb, durchzogen von zarten
+                    Ringen in der Nuance einer reifen Primel.
+                </td>
+
+                <td class="qualitative">
+                    <img
+                            class="intensity-photo"
+                            src="images/hoch-2.png"
+                            alt="Farbintensität nach thermischer Präparation im offenen System"
+                    >
+                    <strong>Hoch · 75–85&nbsp;%</strong>
+                    <br>
+                    Tiefes, feuriges Ringelblumen-Orange mit glänzenden,
+                    bernsteinfarbenen Rändern.
+                </td>
+
+                <td class="qualitative">
+                    <img
+                            class="intensity-photo"
+                            src="images/moderat-3.png"
+                            alt="Farbintensität nach thermischer Präparation im geschlossenen System"
+                    >
+                    <strong>Moderat · 60–70&nbsp;%</strong>
+                    <br>
+                    Saftiges, durchscheinendes Gelb, das an flüssigen Akazienhonig
+                    erinnert. Gleichmäßig hydratisierte Struktur.
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Wassergehalt</th>
+                <td>87&nbsp;%</td>
+                <td>77&nbsp;%</td>
+                <td>85&nbsp;%</td>
+            </tr>
+            <tr>
+                <th scope="row">OI<br><small>(relative Einheiten)</small></th>
+                <td>2/10<br><em>Erdig-gemüsig</em></td>
+                <td>8/10<br><em>Nussige Röstaromen</em></td>
+                <td>7/10<br><em>Wohlig süß</em></td>
+            </tr>
+            <tr>
+                <th scope="row">MBR<br><small>(ml/(g·h))</small></th>
+                <td>1,5–2,5</td>
+                <td>3,0–4,5</td>
+                <td>5,0–6,5</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="report-section">
+        <h2>Auswertung und Interpretation</h2>
+        <div class="finding">
+            <p><strong>Bewertung der mikrobiologischen Reaktanz nach 24 Stunden:</strong> Unter lautstarkem Protest der Mikroben entstehen kurzkettige Fettsäuren und Gase. Das finale olfaktorische Ergebnis der Fermentation hat allerdings jeglichen „blumigen Primel-Charakter“ verloren. Es tendiert mikrobiologisch korrekt eher in Richtung „gereifter Schwefel-Vulkanismus auf feuchtem Waldboden“.</p>
+        </div>
+    </section>
+
+    <section class="report-section">
+        <h2>Kriminalistischer Abgleich</h2>
+        <p>Eine akute Gefährdung laufender Ermittlungen im operativen Fall Nielsen wird zum aktuellen Berichtszeitpunkt als geringfügig eingestuft. Eine olfaktorische Enttarnung des verdeckt operierenden Außendienst-Agenten DD ist unwahrscheinlich. Die taktische Tarnung bleibt operativ gedeckt.</p>
+    </section>
+
+    <section class="report-section">
+        <h2>Gesamtbewertung</h2>
+        <p>Die olfaktorische Auffälligkeit der Probe wurde bestätigt.</p>
+        <p>Eine Übereinstimmung mit den im Rahmen der Sonderermittlung „Schnüffeln im Berufsleben“ dokumentierten Wahrnehmungsleistungen des CI-Drathen konnte mangels standardisierter Vergleichsmessung nicht abschließend bewertet werden.</p>
+    </section>
+
+    <section class="memo report-section">
+        <h2>Aktenvermerk des Zentrallabors</h2>
+        <p><strong>Hinweis der Prüfstelle:</strong> Der zugrunde liegende Referenzdatenbankeintrag P-6180466 weist erhebliche datentechnische Inkonsistenzen sowie eklatante Dokumentationslücken auf.</p>
+        <ul>
+            <li>Sensorische Bewertung im Anlieferungszustand: OI unauffällig; gefundene Karbolspuren sind auf eine Kontaminierung der Umgebung zurückzuführen.</li>
+            <li>Sensorische Bewertung nach thermischer Behandlung: Untersuchung dauert an.</li>
+            <li>OI nach MBR: Vergleichsmessungen verzeichnen eine Intensitätsquote von 100&nbsp;% im olfaktorischen Zielbereich. Die damit verbundene olfaktorische Beeinträchtigung des unmittelbaren Laborumfelds ist als akut und raumfüllend einzustufen.</li>
+        </ul>
+    </section>
+
+    <section class="report-section">
+        <h2>Kommentar</h2>
+
+        <p>
+            Rückstellproben wurden zur späteren forensischen Verifikation
+            amtlich gesichert. Aufgrund akuter sensorischer Anomalien in
+            Teilprobe 02 erfolgte die nachträgliche kriminaltechnische
+            Konservierung der phänotypisch identischen Probe 01.
+        </p>
+
+        <div class="image-row">
+            <figure>
+                <img
+                        src="images/ruck-probe-01.png"
+                        alt="Rückstellprobe AD-02-26/10/04"
+                >
+                <figcaption>Rückstellprobe AD-02-26/10/04</figcaption>
+            </figure>
+
+            <figure>
+                <img
+                        src="images/ruck-probe-02.png"
+                        alt="Rückstellprobe AD-01-26/10/04"
+                >
+                <figcaption>Rückstellprobe AD-01-26/10/04</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <div class="signature">
+        <div>
+            <div class="signature-image"></div>
+            <div class="signature-line">15.10.2026</div>
+            <div class="signature-label">Datum</div>
+        </div>
+        <div>
+            <div class="signature-image">
+                <img src="../images/signature.png" alt="Unterschrift">
+            </div>
+            <div class="signature-line"></div>
+            <div class="signature-label">Bearbeiter / Unterschrift</div>
+        </div>
+    </div>
+
+    <section class="status">
+        <strong>Aktenstatus:</strong>
+        <span>☐ abgeschlossen</span>
+        <span>☒ weitere Prüfung</span>
+        <span>☐ geheim</span>
+    </section>
+    <footer class="footer">
+        <span>Zentrallabor · Untersuchungsakte</span>
+        <span>Laborbericht 02 · P-6180466</span>
+    </footer>
+</main>
+</body>
+</html>

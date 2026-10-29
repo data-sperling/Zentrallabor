@@ -6,7 +6,7 @@ import {
 } from 'recharts'
 import {
   ArrowLeft, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight,
-  Download, FlaskConical, LockKeyhole, RotateCcw, Sparkles
+  Download, FlaskConical, LockKeyhole, RotateCcw, Sparkles, BookOpenText
 } from 'lucide-react'
 import './styles.css'
 
@@ -401,11 +401,10 @@ function Experiment2View() {
                 {answer === 25 && (
                     <a
                         className="download-button"
-                        href={`${import.meta.env.BASE_URL}reports/microbial-reaction-02-26-10-04.pdf`}
-                        download
+                        href={`${import.meta.env.BASE_URL}reports/sample-02-26-10-04/report-02.html`}
                     >
-                      <Download size={17} />
-                      Analysebericht herunterladen
+                      <BookOpenText size={17} />
+                      Analysebericht ansehen
                       <ArrowRight size={15} />
                     </a>
                 )}
