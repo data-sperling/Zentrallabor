@@ -662,7 +662,9 @@ function App() {
                             <p>You've identified the matching standard. The full analysis is ready.</p>
                             {exp.id === 1 ? (
                                 <a className="download-button" href={exp.reportPage}>
-                                  Analysebericht ansehen <ArrowRight size={15} />
+                                  <BookOpenText size={17} />
+                                  Analysebericht ansehen
+                                  <ArrowRight size={15} />
                                 </a>
                             ) : (
                                 <a className="download-button" href={exp.report} download>
@@ -676,7 +678,8 @@ function App() {
                           <div className="answer-heading"><div><span className="panel-index">03</span><h2>Treffen Sie Ihre Auswahl</h2></div><span className="attempts">{attempts} {attempts === 1 ? 'attempt' : 'attempts'}</span></div>
                           <p className="panel-description">Welche Standardkurve passt am besten zur experimentellen Probe?</p>
                           <div className="answer-options">
-                            {Array.from({ length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
+                            {Array.from({
+                              length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
                           </div>
                           {answer !== null && answer !== exp.correct && <p className="feedback error-feedback">Not quite — compare the shape and try another standard.</p>}
                           <div className="privacy-note"><LockKeyhole size={13} /> Der Bericht wird freigeschaltet, sobald Sie die korrekte Übereinstimmung gefunden haben.</div>
