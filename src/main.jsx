@@ -180,7 +180,7 @@ function Graph({ exp, variant, sample = false, compact = false }) {
 }
 
 
-function Experiment2View() {
+function Experiment2View({ locked, onIncorrect, lockoutSeconds }) {
   const [fluorescence, setFluorescence] = useState([])
   const [decay, setDecay] = useState([])
   const [error, setError] = useState(false)
@@ -375,27 +375,46 @@ function Experiment2View() {
           <h3>Wie viel bleibt nach 24 Stunden übrig?</h3>
           <div className="answer-options experiment2-options">
             {[25, 50, 75, 100].map(value => (
-                <button key={value}
-                        className={`answer-option ${
-                            answer === value
-                                ? value === 25 ? 'answer-correct' : 'answer-wrong'
-                                : ''
-                        }`}
-                        onClick={() => setAnswer(value)}>
+                <button
+                    key={value}
+                    disabled={locked || answer === 25}
+                    className={`answer-option ${
+                        answer === value
+                            ? value === 25 ? 'answer-correct' : 'answer-wrong'
+                            : ''
+                    }`}
+                    onClick={() => {
+                      if (locked || answer === 25) return
+
+                      setAnswer(value)
+
+                      if (value !== 25) {
+                        onIncorrect()
+                      }
+                    }}
+                >
                   <span className="answer-letter">{value}%</span>
                   <span>{value}% verbleibend</span>
                 </button>
             ))}
           </div>
 
+
           {answer !== null && (
               <>
-                <p className={answer === 25
-                    ? 'feedback success-feedback'
-                    : 'feedback error-feedback'}>
+                <p
+                    className={
+                      answer === 25
+                          ? 'feedback success-feedback'
+                          : 'feedback error-feedback'
+                    }
+                    role="alert"
+                >
                   {answer === 25
                       ? 'Richtig. Es sind zwei 12-Stunden-Halbwertszeiten verstrichen, sodass noch 25 % übrig sind.'
-                      : 'Nicht ganz. Überprüfen Sie, wie viele 12-Stunden-Halbwertszeiten in 24 Stunden passen.'}
+                      : locked
+                          ? `Diese Antwort ist nicht korrekt. Versuchen Sie es erneut in ${Math.floor(lockoutSeconds / 60)}:${String(lockoutSeconds % 60).padStart(2, '0')}.`
+                          : 'Nicht ganz. Sie können jetzt einen neuen Versuch starten.'}
                 </p>
 
                 {answer === 25 && (
@@ -410,6 +429,7 @@ function Experiment2View() {
                 )}
               </>
           )}
+
         </div>
       </section>
   )
@@ -495,6 +515,15 @@ function App() {
   const [activeStandard, setActiveStandard] = useState(0)
   const [answer, setAnswer] = useState(null)
   const [attempts, setAttempts] = useState(0)
+
+  const [lockoutUntil, setLockoutUntil] = useState(0)
+  const [clockNow, setClockNow] = useState(Date.now())
+
+  const lockoutSeconds = Math.max(
+      0,
+      Math.ceil((lockoutUntil - clockNow) / 1000)
+  )
+
   const exp = EXPERIMENTS.find(item => item.id === selectedId)
   const completed = answer === exp?.correct
 
@@ -510,10 +539,20 @@ function App() {
     setAnswer(null)
     window.history.pushState({}, '', window.location.pathname)
   }
+  function startLockout() {
+    const until = Date.now() + 10 * 60 * 1000
+    setClockNow(Date.now())
+    setLockoutUntil(until)
+  }
   function choose(index) {
-    if (completed) return
+    if (completed || lockoutSeconds > 0) return
+
     setAnswer(index)
     setAttempts(n => n + 1)
+
+    if (index !== exp.correct) {
+      startLockout()
+    }
   }
 
   const standardCount = exp?.standards?.length ?? 4
@@ -522,15 +561,40 @@ function App() {
 
   React.useEffect(() => {
     const onPop = () => {
-      const id = Number(new URLSearchParams(window.location.search).get('experiment'))
+      const id = Number(
+          new URLSearchParams(window.location.search).get('experiment')
+      )
+
       setSelectedId(EXPERIMENTS.some(e => e.id === id) ? id : null)
       setAnswer(null)
     }
-    const id = Number(new URLSearchParams(window.location.search).get('experiment'))
-    if (EXPERIMENTS.some(e => e.id === id)) setSelectedId(id)
+
+    const id = Number(
+        new URLSearchParams(window.location.search).get('experiment')
+    )
+
+    if (EXPERIMENTS.some(e => e.id === id)) {
+      setSelectedId(id)
+    }
+
     window.addEventListener('popstate', onPop)
     return () => window.removeEventListener('popstate', onPop)
   }, [])
+
+  React.useEffect(() => {
+    if (!lockoutUntil) return
+
+    const timer = window.setInterval(() => {
+      const now = Date.now()
+      setClockNow(now)
+
+      if (now >= lockoutUntil) {
+        setLockoutUntil(0)
+      }
+    }, 1000)
+
+    return () => window.clearInterval(timer)
+  }, [lockoutUntil])
 
   return (
       <div className="app-shell">
@@ -621,8 +685,24 @@ function App() {
                 <div className="progress-chip"><span className="progress-number">0{exp.id}</span><span className="progress-slash">/</span><span>05 experimenten</span></div>
               </div>
 
+              {lockoutSeconds > 0 && (
+                  <div className="lockout-notice" role="alert">
+                    <strong>Pause erforderlich</strong>
+                    <span>
+                      Weitere Antworten sind vorübergehend gesperrt.
+                      Verbleibende Zeit: {' '}
+                      {Math.floor(lockoutSeconds / 60)}:
+                      {String(lockoutSeconds % 60).padStart(2, '0')}
+                    </span>
+                  </div>
+              )}
+
               {exp.id === 2 ? (
-                  <Experiment2View />
+                  <Experiment2View
+                      locked={lockoutSeconds > 0}
+                      lockoutSeconds={lockoutSeconds}
+                      onIncorrect={startLockout}
+                  />
               ) : (
               <div className="comparison-layout">
                 <section className="panel sample-panel">
@@ -675,14 +755,43 @@ function App() {
                         </div>
                     ) : (
                         <>
-                          <div className="answer-heading"><div><span className="panel-index">03</span><h2>Treffen Sie Ihre Auswahl</h2></div><span className="attempts">{attempts} {attempts === 1 ? 'attempt' : 'attempts'}</span></div>
-                          <p className="panel-description">Welche Standardkurve passt am besten zur experimentellen Probe?</p>
                           <div className="answer-options">
-                            {Array.from({
-                              length: standardCount }, (_, i) => <button key={i} onClick={() => choose(i)} className={`answer-option ${answer === i ? (i === exp.correct ? 'answer-correct' : 'answer-wrong') : ''}`}><span className="answer-letter">{String.fromCharCode(65+i)}</span><span>Standard {String.fromCharCode(65+i)}</span>{answer === i && (i === exp.correct ? <CheckCircle2 size={17} /> : <RotateCcw size={16} />)}{answer !== i && <ArrowRight className="answer-arrow" size={15} />}</button>)}
+                            {Array.from({ length: standardCount }, (_, i) => (
+                                <button
+                                    key={i}
+                                    disabled={lockoutSeconds > 0}
+                                    onClick={() => choose(i)}
+                                    className={`answer-option ${
+                                        answer === i
+                                            ? (i === exp.correct ? 'answer-correct' : 'answer-wrong')
+                                            : ''
+                                    }`}
+                                >
+                                  <span className="answer-letter">
+                                    {String.fromCharCode(65 + i)}
+                                  </span>
+                                  <span>Standard {String.fromCharCode(65 + i)}</span>
+
+                                  {answer === i && (
+                                      i === exp.correct
+                                          ? <CheckCircle2 size={17} />
+                                          : <RotateCcw size={16} />
+                                  )}
+
+                                  {answer !== i && (
+                                      <ArrowRight className="answer-arrow" size={15} />
+                                  )}
+                                </button>
+                            ))}
                           </div>
-                          {answer !== null && answer !== exp.correct && <p className="feedback error-feedback">Knapp vorbei - betrachten Sie die Kurven nochmal genauer auf verdächtige Hinweise.</p>}
-                          <div className="privacy-note"><LockKeyhole size={13} /> Der Bericht wird freigeschaltet, sobald Sie die korrekte Übereinstimmung gefunden haben.</div>
+
+                          {answer !== null && answer !== exp.correct && (
+                              <p className="feedback error-feedback" role="alert">
+                                Fast richtig! Diese Antwort ist nicht korrekt. Versuchen Sie es erneut in {Math.floor(lockoutSeconds / 60)}:
+                                {String(lockoutSeconds % 60).padStart(2, '0')}.
+                              </p>
+                          )}
+
                         </>
                     )}
                   </div>

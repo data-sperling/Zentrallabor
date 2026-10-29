@@ -554,3 +554,25 @@ thead th {
     display: flex;
     align-items: flex-end;
 }
+
+.lockout-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin: 0 0 20px;
+    padding: 14px 16px;
+    border: 1px solid #e3c98d;
+    border-radius: 10px;
+    background: #fff8e8;
+    color: #684d16;
+}
+
+.lockout-notice strong {
+    font-weight: 700;
+}
+
+.answer-option:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
