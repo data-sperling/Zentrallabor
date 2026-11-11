@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laborbericht Nr. 04 – Zentrallabor</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        .sample-photos {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            width: 100%;
+            margin: 16px 0 22px;
+        }
+
+        .sample-photos figure {
+            margin: 0;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .sample-photos img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #f2f5f7;
+            border: 1px solid #d8e0e7;
+        }
+
+        .sample-photos figcaption {
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .sample-description {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+            align-items: start;
+            margin: 16px 0 22px;
+        }
+
+        .sample-description figure {
+            margin: 0;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .sample-description img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            background: #f2f5f7;
+            border: 1px solid #d8e0e7;
+            margin-bottom: 0.5rem;
+        }
+
+        .sample-description figcaption {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+
+        .interpretation-images {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin: 16px 0 22px;
+        }
+
+        .interpretation-images figure img {
+            height: 200px;
+            object-fit: contain;
+            background: white;
+        }
+
+        .placeholder {
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .pending {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .measurement-table th:first-child {
+            width: 48%;
+        }
+
+        .measurement-table th:last-child {
+            width: 52%;
+        }
+
+        /* Mobile layout */
+        @media (max-width: 650px) {
+            .sample-photos {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-description {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-description img,
+            .interpretation-images figure img {
+                height: auto;
+                max-height: 240px;
+            }
+        }
+
+        /* Print layout */
+        @media print {
+            .sample-photos {
+                break-inside: avoid;
+            }
+
+            .sample-photos img {
+                height: 150px;
+            }
+
+            .sample-description {
+                break-inside: avoid;
+            }
+
+            .sample-description img {
+                height: 150px;
+            }
+
+            .interpretation-images {
+                break-inside: avoid;
+            }
+
+            .interpretation-images figure img {
+                height: 140px;
+            }
+
+            /* Interpretation positioning */
+            .interpretation {
+                padding-top: 15px;
+            }
+
+            /* Reduce space in the Aktenvermerk */
+            .memo h2 {
+                margin-bottom: 6px;
+            }
+
+            .memo p {
+                margin-bottom: 6px;
+            }
+
+            .memo {
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+
+            /* Move signature section upwards */
+            .signature {
+                margin-top: -15px !important;
+            }
+
+            /* Reduce the height above the signature lines */
+            .signature-spacer {
+                height: 15px;
+            }
+
+            /* Move signature image up to the signature line */
+            .signature-spacer img {
+                transform: translate(75px, 0);
+            }
+
+            /* Reduce space before footer */
+            .status {
+                margin-top: 5px !important;
+                margin-bottom: 0 !important;
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .footer {
+                margin-top: 5px !important;
+                padding-top: 5px !important;
+                break-inside: avoid;
+            }
+        }
+
+        .signature-column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .signature-spacer {
+            height: 50px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .signature-spacer img {
+            max-height: 45px;
+            max-width: 180px;
+            object-fit: contain;
+            transform: translate(75px, 62px);
+        }
+
+        .signature-line {
+            height: 1.5rem;
+            border-bottom: 1px solid var(--ink);
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .signature-label {
+            margin-top: 5px;
+        }
+    </style>
+
+</head>
+<body>
+<main class="report">
+    <header class="masthead">
+        <div>
+            <div class="eyebrow">Zentrallabor · Untersuchungsbericht</div>
+        </div>
+        <div class="classification">LABORBERICHT · 04</div>
+    </header>
+
+    <div class="report-actions">
+        <a href="Bericht-04.pdf" download>Bericht als PDF herunterladen</a>
+    </div>
+    </div>
+
+    <h1>Laborbericht Nr. 04 Der Ring des Verbrechens</h1>
+
+    <section aria-labelledby="stammdaten">
+        <h2 id="stammdaten">Stammdaten</h2>
+        <div class="metadata">
+            <div class="field">
+                <span class="field-label">Probennummer</span>
+                <span class="field-value">01-26/09/20</span>
+            </div>
+            <div class="field">
+                <span class="field-label">Probeneingang</span>
+                <span class="field-value">07. Oktober 2026</span>
+            </div>
+            <div class="field">
+                <span class="field-label">Ermittler / Personalnummer</span>
+                <span class="field-value">CI-D, P-6180466</span>
+            </div>
+            <div class="field">
+                <span class="field-label">Bearbeitungsstatus</span>
+                <span class="field-value">Abgeschlossen</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="report-section" aria-labelledby="auftrag">
+        <h2 id="auftrag">Untersuchungsauftrag</h2>
+        <p>
+            Chromatografische Analyse der enthaltenen Faserbestandteile mit besonderem Augenmerk auf einen möglichen
+            Zusammenhang zum Fall Nielsen (Pullover?).
+        </p>
+    </section>
+
+    <div class="sample-photos">
+        <figure>
+            <img src="images/fig-1.png"
+                 alt="Originalzustand der eingegangenen Probe">
+            <figcaption>Originalzustand.</figcaption>
+        </figure>
+
+        <figure>
+            <img src="images/fig-2.png"
+                 alt="Zweite Ansicht der Probe">
+            <figcaption>Seitenansicht.</figcaption>
+        </figure>
+
+        <figure>
+            <img src="images/fig-3.png"
+                 alt="Dritte Ansicht der Probe">
+            <figcaption>Detailansicht.</figcaption>
+        </figure>
+    </div>
+    <p class="placeholder">Die Probenentnahme erfolgte laut Ermittlungsbericht mittels Spatel und luftdichtem Probenbeutel.
+        Die Zentrale würdigt ausdrücklich die professionelle Sicherung des Materials. Eine derart sorgfältige Verpackung
+        hätte auch bei deutlich weniger appetitlichen Beweismitteln ihre Berechtigung.
+    </p>
+
+    <section class="report-section" aria-labelledby="methodik">
+        <h2 id="methodik">Methodik</h2>
+        <p>
+            Mechanische Trennung der hellen und dunklen Bestandteile. Gefolgt von mikroskopischer
+            Untersuchung der mutmaßlichen Faserstrukturen und chromatografischen Materialabgleich mit Referenzmaterial
+            aus dem Fall Nielsen. Ergänzende optische Begutachtung des bei Feierlichkeiten im direkten Umfeld des CI-D.
+            gesichteten Vergleichsobjekts.
+        </p>
+    </section>
+
+    <section class="report-section results-section" aria-labelledby="messerg">
+        <h2 id="messerg">Messergebnisse</h2>
+        <p>Die untersuchten Probenbestandteile sind nachfolgend aufgeführt.</p>
+        <table class="measurement-table">
+            <thead>
+            <tr>
+                <th>Messwert</th>
+                <th>Dunkler Bestandteil</th>
+                <th>Heller Heller Bestandteil</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Organischer Anteil</td>
+                <td>99.8%</td>
+                <td>99.1%</td>
+            </tr>
+            <tr>
+                <td>C2H5 Faserartige Strukturen</td>
+                <td>Gering</td>
+                <td>Deutlich</td>
+            </tr>
+            <tr>
+                <td>Ũbereinstimmung mit Pullover Nielsen</td>
+                <td>0.4%</td>
+                <td>3.2%</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="report-section interpretation" aria-labelledby="auswertung">
+        <h2 class="interpretation-heading">AUSWERTUNG UND INTERPRETATION</h2>
+
+        <div class="finding">
+            <p>
+                Die dunklen, ringförmigen Strukturen zeigen eine auffällige Ähnlichkeit mit auf dem Referenzmaterial
+                gefundenen Strukturen auf. Die inneren helleren Bestandteile weisen charakteristische Merkmale eines getrockneten
+                Pflanzenmaterials auf. Die Untersuchung konnte die ursprüngliche Vermutung eines textilen Beweismittels nicht bestätigen. Stattdessen
+                ergab sich eine eindeutige Zuordnung zu einer schokoladenüberzogenen Fruchtzubereitung.
+            </p>
+        </div>
+    </section>
+
+    <section class="report-section" aria-labelledby="abgleich">
+        <h2 id="abgleich">Kriminalistischer Abgleich</h2>
+        <p>
+            Ein Zusammenhang mit dem vermissten Pullover konnte nicht festgestellt werden. Die Probe enthält weder
+            relevante Textilfasern noch sonstige Hinweise, die eine Verbindung zum Fall Nielsen nahelegen.
+            Besonders bemerkenswert ist jedoch der Vergleich mit dem Referenzmaterial aus dem häuslichen Umfeld des CI-D.
+            Die Ähnlichkeit der Ringstruktur ist verblüffend. Ob es sich dabei um eine zufällige Übereinstimmung oder um eine
+            bislang unbekannte kulinarische Verbindung handelt, bleibt offen. Die Zentrale möchte allerdings darauf hinweisen,
+            dass nicht jede ringförmige Struktur automatisch auf eine kriminelle Vereinigung schließen lässt.
+        </p>
+    </section>
+
+    <section class="report-section" aria-labelledby="gesamtbewertung">
+        <h2 id="gesamtbewertung">Gesamtbewertung</h2>
+
+        <span class="finding-label">Untersuchungsergebnis</span>
+        <ul>
+            <li>Materialidentifikation: Weitere Untersuchungen erforderlich.</li>
+            <li>Textilfasern: Nicht nachweisbar.</li>
+            <li>Übereinstimmung mit Pullover Nielsen: Keine</li>
+            <li>Übereinstimmung mit Referenzprobe: Auffällig</li>
+            <li>Kriminalistische Relevanz: Gering</li>
+            <li>Qualität der Spurensicherung: Vorbildlich</li>
+        </ul>
+    </section>
+
+    <aside class="memo">
+        <h2>Aktenvermerk des Zentrallabors</h2>
+            <p>
+                Personalakte P-6180466:
+                Die sorgfältige Beweismittelsicherung wird positiv bewertet. Die Fähigkeit, einen zufällig aufgefundenes
+                Straßenmaterial in möglichen Zusammenhang zum Fall Nielsen zu bringen, entspricht grundsätzlich den Erwartungen
+                an einen Chef-Ermittler, der für die sorgfältige Sicherung und Dokumentation der Probe ausdrücklich gelobt wird.
+            </p>
+            <p>
+                Nachtrag:
+                Der Verdacht, dass CI-D bei der Spurensicherung möglicherweise mehr an der kulinarischen als an
+                der kriminalistischen Qualität der Probe interessiert war, konnte nicht ausgeräumt werden.
+            </p>
+            <p>
+                Hinweis der Laborleitung:
+                Die Untersuchungskapazitäten des Zentrallabors sind nicht unbegrenzt. Die Bearbeitung weiterer Lebensmittelproben
+                ohne erkennbaren Bezug zum Fall Nielsen könnte künftig zu Verzögerungen bei der Bearbeitung tatsächlich kriminalistisch relevanter Beweismittel führen.
+                Die Zentrale bittet außerdem um Mitteilung, ob die Referenzprobe noch verfügbar ist. Eine ergänzende Untersuchung
+                erscheint nach wie vor sinnvoll. Die Kantine hat bereits Interesse angemeldet.
+            </p>
+    </aside>
+
+    <div class="signature">
+        <div class="signature-column">
+            <div class="signature-spacer"></div>
+            <div class="signature-line">28.10.2026</div>
+            <div class="signature-label">Datum</div>
+        </div>
+
+        <div class="signature-column">
+            <div class="signature-spacer">
+                <img src="../images/signature.png" alt="Unterschrift">
+            </div>
+            <div class="signature-line"></div>
+            <div class="signature-label">Bearbeiter / Unterschrift</div>
+        </div>
+    </div>
+
+    <div class="status">
+        <strong>Aktenstatus:</strong>
+        <span>☒ abgeschlossen</span>
+        <span>☐ weitere Prüfung</span>
+        <span>☐ geheim</span>
+    </div>
+
+    <footer class="footer">
+        <span>Zentrallabor · Untersuchungsakte</span>
+        <span>Laborbericht Nr. 04 · Probennummer 01-26/09/20</span>
+    </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laborbericht Nr. 05 – Titel</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        .report-section {
+            margin-top: 1.35rem;
+        }
+
+        .report-section h2 {
+            margin-bottom: .55rem;
+        }
+
+        /* Three sample photographs side by side */
+        .sample-photos {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            width: 100%;
+            margin: 16px 0 22px;
+        }
+
+        .sample-photos figure {
+            margin: 0;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .sample-photos img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #f2f5f7;
+            border: 1px solid #d8e0e7;
+        }
+
+        .sample-photos figcaption {
+            font-size: 0.9rem;
+            margin-top: 6px;
+        }
+
+        .sample-placeholder {
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px dashed #999;
+            color: #666;
+            text-align: center;
+        }
+
+        .memo {
+            margin-top: 1.35rem;
+        }
+
+        .memo p:last-of-type {
+            margin-bottom: 1rem;
+        }
+
+        .memo-meta {
+            margin-top: 1.25rem;
+        }
+
+        @media print {
+            .page-break-before {
+                break-before: page;
+                page-break-before: always;
+            }
+
+            .memo {
+                margin-top: 1.35rem;
+            }
+
+            .final-page {
+                min-height: auto;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+            }
+
+            .signature {
+                margin-top: 0.5rem;
+            }
+
+            .overall-assessment {
+                break-before: page;
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<main class="report">
+
+    <header class="masthead">
+        <div>
+            <div class="eyebrow">Zentrallabor · Untersuchungsakte</div>
+        </div>
+        <div class="classification">LABORBERICHT · 05</div>
+    </header>
+
+    <div class="report-actions">
+        <a href="Bericht-05.pdf" download>
+            PDF-Bericht herunterladen
+        </a>
+    </div>
+
+    <section class="report-title">
+        <h1>Laborbericht Nr. 05 „Goldrausch im Schuhprofil“</h1>
+    </section>
+
+    <h2>Stammdaten</h2>
+
+    <div class="metadata">
+        <div class="field">
+            <span class="field-label">Probennummer</span>
+            <span class="field-value">02-26/09/20</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Probeneingang</span>
+            <span class="field-value">07. Oktober 2026</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Ermittler / Personalnummer</span>
+            <span class="field-value">CI-D, P-6180466</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Bearbeitungsstatus</span>
+            <span class="field-value">Abgeschlossen</span>
+        </div>
+    </div>
+
+    <section class="report-section">
+        <h2>Untersuchungsauftrag</h2>
+        <p>
+            Röntgendiffraktometrische Untersuchung auf Edelmetallbestandteile.
+
+                Bei positivem Befund: Herkunftsangabe der Ursprungsmaterialien, insbesondere Prüfung möglicher
+                Blattgoldspuren im Zusammenhang mit der kunstsachverständigen Tätigkeit des Vermissten.
+        </p>
+    </section>
+
+    <section class="report-section">
+        <h2>Probenbeschreibung und Eingangsbefund</h2>
+        <p>
+            Die eingesandte Probe wurde laut Außendienstbericht beim Gang über die Straße entdeckt und anschließend dem
+            Schuhprofil entnommen. Das Material präsentiert sich als dunkelbraunes, unregelmäßig geformtes Konglomerat
+            mit glänzenden Oberflächenbereichen und auffälligen orangefarbenen sowie gelblichen Einschlüssen mit einer
+            ausgeprägte Heterogenität.
+
+            Die Laborleitung hat die Probe aufgrund der beschriebenen Fundumstände zunächst unter besonderer Vorsicht
+            behandeln lassen. Ein Mitarbeiter äußerte bereits bei der ersten Sichtung den Verdacht, dass es sich um ein
+            Beweismittel handeln könnte, das besser nicht auf dem Labortisch liegen sollte.
+        </p>
+
+        <div class="sample-photos">
+            <figure>
+                <img src="images/sample_1.jpg"
+                     alt="Originalzustand der eingegangenen Probe">
+                <figcaption>Originalzustand.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/sample_2.png"
+                     alt="Zweite Ansicht der Probe">
+                <figcaption>Seitenansicht.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/sample_3.png"
+                     alt="Dritte Ansicht der Probe">
+                <figcaption>Detailansicht.</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <section class="report-section">
+        <h2>Methodik</h2>
+        <ul>
+            <li>Röntgendiffraktometrische Untersuchung auf kristalline Bestandteile.</li>
+            <li>Ergänzende Materialanalyse auf Edelmetallspuren.</li>
+            <li>Mechanische Trennung der unterschiedlichen Probenbestandteile.</li>
+            <li>Sensorische Prüfung einer sauberen Vergleichsprobe.</li>
+        </ul>
+        <p>
+            Die sensorische Untersuchung wurde zunächst von zwei Mitarbeiter*innen unabhängig voneinander durchgeführt.
+            Nach übereinstimmender Bewertung wurde beschlossen, die Anzahl der weiteren Testpersonen auf das unbedingt
+            erforderliche Maß zu reduzieren. Die Laborleitung dankt insbesondere der freiwilligen Mitarbeiterin für
+            ihren persönlichen Einsatz und ihre bemerkenswerte Bereitschaft, auch unter schwierigen Bedingungen zur
+            Aufklärung beizutragen.
+        </p>
+
+    </section>
+
+    <section class="report-section page-break-before">
+        <h2>Messergebnisse</h2>
+        <h3>1. Materialanalyse</h3>
+        <table class="measurement-table">
+            <thead>
+            <tr>
+                <th>Untersuchungsparameter</th>
+                <th>Ergebnis</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Gold (Au)</td>
+                <td>Nicht nachweisbar</td>
+            </tr>
+            <tr>
+                <td>Sonstige Edelmetalle</td>
+                <td>Keine relevanten Befunde</td>
+            </tr>
+            <tr>
+                <td>Gemessene Härte</td>
+                <td>tbd</td>
+            </tr>
+            </tbody>
+        </table>
+        <h3>2. Olfaktorische Untersuchung</h3>
+        <table class="measurement-table">
+            <thead>
+            <tr>
+                <th>Prüfmerkmal</th>
+                <th>Bewertung</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Intensität im Anlieferungszustand</td>
+                <td>9/10</td>
+            </tr>
+            <tr>
+                <td>Erdige Begleitnoten</td>
+                <td>stark ausgeprägt</td>
+            </tr>
+            <tr>
+                <td>Gesamteindruck</td>
+                <td>dringend erklärungsbedürftig</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <span>Die Probenherkunft konnte nicht eindeutig bestimmt werden.</span>
+
+
+    </section>
+
+    <section class="report-section">
+        <h2>Auswertung und Interpretation</h2>
+
+        <div class="finding">
+            <p>
+                Die Untersuchung auf Edelmetalle verlief negativ. Insbesondere konnten keine relevanten Blattgoldspuren
+                nachgewiesen werden. Die ursprüngliche Vermutung einer kunsthistorisch bedeutsamen Spur muss daher vorläufig
+                verworfen werden.
+
+                Stattdessen ist festzustellen, dass der CI-D. wohl durch die gelblichen Farbe im Inneren der Probe von
+                Unbekannten auf eine falsche Fährte gelockt wurde. Nicht alles was gelb ist, ist Gold; auch wenn das
+                Zuspielen von Edelmetallproben durchaus der Kaffeekasse dienen würde. Die Laborleitung zeigt sich über
+                diesen Befund bedingt enttäuscht, lieferte so auch die letzte eingesanfte Probe keine Hinweise auf den Fall
+                Nielsen.
+
+                Die olfaktorische Untersuchung ergab eine erhebliche Abweichung zwischen dem ursprünglichen Fundmaterial
+                und der sauberen Vergleichsprobe. Die Laborleitung geht davon aus, dass die ungewöhnliche Geruchsentwicklung
+                ist mit den Fundumständen und einer möglichen Kontamination durch das Schuhprofil vereinbar ist.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="report-section">
+        <h2>Kriminalistischer Abgleich</h2>
+        <h3>Fall Nielsen:</h3>
+        <p>
+            Ein Zusammenhang mit der kunstsachverständigen Tätigkeit des Vermissten konnte nicht festgestellt werden.
+            Insbesondere gibt es keine Hinweise auf Blattgold oder andere Edelmetallspuren.
+
+            Die Zentrale fragt sich, ob die Suche nach Gold möglicherweise etwas zu ambitioniert war. Ein einfacher
+            olefaktorischer Test am Fundort hätte für die Aufklärung der Spur vermutlich ausgereicht.
+        </p>
+        <h3>Personalakte CI-D:</h3>
+        <p>
+            Die Bereitschaft des Ermittlers, auch ungewöhnliche Fundstücke zu sichern und dem Zentrallabor zur Verfügung
+            zu stellen, wird ausdrücklich gewürdigt. Die Zentrale empfiehlt, künftig vor der Entnahme aus dem Schuhprofil
+            eine kurze Sichtprüfung vorzunehmen. Nicht jedes Material, das auf der Straße liegt, muss zwangsläufig einen
+            kriminalistischen Hintergrund haben.
+        </p>
+        <h3>Deputy D.:</h3>
+        <p>
+            Die Zentrale stellt fest, dass Deputy D. erneut im Zusammenhang mit einer ungewöhnlichen Außendienstaktion auftaucht.
+            Es wird daher um Klärung gebeten, ob Deputy D. an der Auswahl, Beschaffung oder möglichen Verkostung des ursprünglichen
+            Materials beteiligt war. Eine Aussage wie „Das war nur zur Tarnung“ wird als Erklärung nicht akzeptiert.
+        </p>
+    </section>
+
+    <section class="report-section overall-assessment">
+        <h2>Gesamtbewertung</h2>
+        <ol>
+            <li>Edelmetallnachweis: Negativ</li>
+            <li>Blattgold: Nicht nachweisbar</li>
+            <li>Bezug zum Fall Nielsen: Nicht belegt</li>
+            <li>Kriminalistische Relevanz: Gering</li>
+            <li>Belastung des Zentrallabors: Hoch</li>
+        </ol>
+
+    </section>
+
+    <section class="memo report-section">
+        <h2>Aktenvermerk des Zentrallabors</h2>
+
+        <p>
+            Die Zentrale würdigt den Einsatz des CI-D und die sorgfältige Sicherung der Probe.
+
+            Allerdings hat die aktuelle Probenserie zu einer erheblichen Mehrbelastung des Zentrallabors geführt.
+
+            Nach Untersuchung von fünf Proben, mehreren Sonderaufträgen und einer nicht unerheblichen Anzahl sensorischer
+            Prüfungen sieht sich die Laborleitung veranlasst, eine vorübergehende Einschränkung der Probenannahme zu beantragen.
+            Die Laborleitung bittet darum, künftig nur noch Proben mit erkennbarem kriminalistischem Mehrwert einzusenden.
+        </p>
+        <h3>Abschließende Bemerkung:</h3>
+        <p>
+            Die Zentrale hofft, dass die nächsten Außendienstberichte wieder einen stärkeren Bezug zum Fall Nielsen aufweisen.
+            Das Zentrallabor ist ein kriminaltechnischer Dienstleister und keine Außenstelle der Lebensmittelkontrolle.
+        </p>
+
+    </section>
+
+    <div class="final-page">
+
+        <div class="signature">
+            <div>
+                <div class="signature-image"></div>
+                <div class="signature-line">7.11.2026</div>
+                <div class="signature-label">Datum</div>
+            </div>
+
+            <div>
+                <div class="signature-image">
+                    <img src="../images/signature.png" alt="Unterschrift">
+                </div>
+                <div class="signature-line"></div>
+                <div class="signature-label">Bearbeiter / Unterschrift</div>
+            </div>
+        </div>
+
+        <section class="status">
+            <strong>Aktenstatus:</strong>
+            <span>☒ abgeschlossen</span>
+            <span>☐ weitere Prüfung</span>
+            <span>☐ geheim</span>
+        </section>
+
+        <footer class="footer">
+            <span>Zentrallabor · Untersuchungsakte</span>
+            <span>Laborbericht 05 · P-6180466</span>
+        </footer>
+
+    </div>
+</main>
+</body>
+</html>

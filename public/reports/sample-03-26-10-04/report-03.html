@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Laborbericht Nr. 03 – Titel</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+
+        .measurement-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .measurement-table th:first-child,
+        .measurement-table td:first-child {
+            width: 22%;
+        }
+
+        .measurement-table th:not(:first-child),
+        .measurement-table td:not(:first-child) {
+            width: 26%;
+        }
+
+        .measurement-table td,
+        .measurement-table th {
+            overflow-wrap: anywhere;
+            vertical-align: top;
+        }
+
+        .report-section {
+            margin-top: 1.35rem;
+        }
+
+        .report-section h2 {
+            margin-bottom: .55rem;
+        }
+
+        /* Three sample images side by side */
+        .sample-image-row {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .sample-image-row figure {
+            margin: 0;
+            min-width: 0;
+            text-align: center;
+        }
+
+        .sample-image-row img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+        }
+
+        .sample-image-row figcaption {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .table-note {
+            margin-top: 0.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        @media (max-width: 600px) {
+            .sample-image-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+
+            /* Reduce vertical spacing throughout the report */
+            .report-section {
+                margin-top: .8rem;
+            }
+
+            .report-section h2 {
+                margin-top: .8rem;
+                margin-bottom: .4rem;
+            }
+
+            .report-section p {
+                margin-top: .3rem;
+                margin-bottom: .45rem;
+                line-height: 1.3;
+            }
+
+            /* Keep the measurement section starting on page 2 */
+            .page-break-before {
+                break-before: page;
+                page-break-before: always;
+            }
+
+            /* Avoid splitting the signature and status area */
+            .final-page {
+                min-height: auto;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .memo {
+                margin-top: 3.5rem;
+                padding: 12px 14px;
+                background: #fbf8f1 !important;
+                break-inside: avoid;
+            }
+
+            .memo h2 {
+                margin-top: 0;
+                margin-bottom: .25rem;
+            }
+
+            .signature {
+                margin-top: .4rem;
+                break-inside: avoid;
+            }
+
+            .status {
+                margin-top: .4rem;
+                padding: 6px 10px;
+                break-inside: avoid;
+            }
+
+            /* Slightly reduce table text */
+            .measurement-table {
+                font-size: 9pt;
+            }
+
+            .footer {
+                margin-top: .5rem;
+                padding-top: .3rem;
+            }
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<main class="report">
+
+    <header class="masthead">
+        <div>
+            <div class="eyebrow">Zentrallabor · Untersuchungsakte</div>
+        </div>
+        <div class="classification">LABORBERICHT · 03</div>
+    </header>
+
+    <div class="report-actions">
+        <a href="Bericht-03.pdf" download>
+            PDF-Bericht herunterladen
+        </a>
+    </div>
+
+    <section class="report-title">
+        <h1>Laborbericht Nr. 03 Wurzelverdacht – ein scharfes Aroma</h1>
+    </section>
+
+    <h2>Stammdaten</h2>
+
+    <div class="metadata">
+        <div class="field">
+            <span class="field-label">Probennummer</span>
+            <span class="field-value">03-26/09/20</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Probeneingang</span>
+            <span class="field-value">07. Oktober 2026</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Ermittler / Personalnummer</span>
+            <span class="field-value">CI-D, P-6180466</span>
+        </div>
+
+        <div class="field">
+            <span class="field-label">Bearbeitungsstatus</span>
+            <span class="field-value">Abgeschlossen</span>
+        </div>
+    </div>
+
+    <section class="report-section">
+        <h2>Untersuchungsauftrag</h2>
+            Herstellung verschiedener wässriger Lösungen und Abriebe unter kontrolliertem Einsatz mechanischer und
+            thermischer Energie. Erstellen von wässrigen Lösungen und deren Überprüfung auf PFAS und C<sub>2</sub>H<sub>5</sub>OH.
+    </section>
+
+    <section class="report-section">
+        <h2>Probenbeschreibung und Eingangsbefund</h2>
+
+        <div class="sample-image-row">
+            <figure>
+                <img src="images/originalzustand.png" alt="Originalzustand der Probe">
+                <figcaption>Originalzustand der Probe</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/probenaufbereitung.png" alt="Probenaufbereitung nach T/E/E">
+                <figcaption>Probenaufbereitung lt. Verfahren T/E/E</figcaption>
+            </figure>
+
+            <figure>
+                <img src="images/probenaufbereitung_2.png" alt="Probenaufbereitung nach Cit_Rus_Lim04">
+                <figcaption>Probenaufbereitung gemäß Verfahren Cit_Rus_Lim04</figcaption>
+            </figure>
+        </div>
+
+        <h3>Eingangsbefund</h3>
+        <p>
+            Rhizomstücke mit grün-roten Stängelansätzen wurden im unbeschädigten, manipulationssicheren Zustand verwahrt
+            und für die toxikologische Analyse freigegeben.
+        </p>
+        <p>
+            Durch die bereits erfolge Vorbehandlung durch CI-D konnte im Rahmen der Probeneingangsprüfung eine
+            charakteristische faserige Gewebestruktur mit einem ausgeprägten aromatischen Profil festgestellt werden.
+        </p>
+    </section>
+
+    <section class="report-section">
+        <h2>Methodik</h2>
+        <p>
+            Siehe Verfahrenshandbuch_25: T/E/E und Cit_Rus_Lim04.
+            Auf Anweisung des Laborleiters zusätzlich nach
+            Dark&amp;Stormy 2024.
+        </p>
+    </section>
+
+    <section class="report-section page-break-before">
+        <h2>Messergebnisse</h2>
+
+        <table class="measurement-table">
+            <thead>
+            <tr>
+                <th scope="col">Messwert</th>
+                <th scope="col">T/E/E</th>
+                <th scope="col">Cit_Rus_Lim04</th>
+                <th scope="col">D&amp;S, 2024</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <th scope="row">
+                    PFAS-Gehalt<br>
+                    <small>(µg/l)</small>
+                </th>
+                <td>&lt; 0,001<br><em>(n.n.)</em></td>
+                <td>&lt; 0,001<br><em>(n.n.)</em></td>
+                <td>&lt; 0,001<br><em>(n.n.)</em></td>
+            </tr>
+
+            <tr>
+                <th scope="row">
+                    C₂H₅OH-Gehalt<br>
+                    <small>(Vol.-%)</small>
+                </th>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>11,40</td>
+            </tr>
+
+            <tr>
+                <th scope="row">
+                    6-Gingerol<br>
+                    <small>(mg/l)</small>
+                </th>
+                <td>12,50</td>
+                <td>9,80</td>
+                <td>2,10</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="table-note">
+            <small><strong>Hinweis:</strong> n.n. = nicht nachweisbar</small>
+        </p>
+    </section>
+
+    <section class="report-section">
+        <h2>Auswertung und Interpretation</h2>
+
+        <div class="finding">
+            <p>
+                Das erhaltene Spektrenprofil ist mit einer pflanzlichen Matrix vereinbar. Der Abgleich mit Referenzdaten zeigt in allen drei Proben
+                eine eindeutige qualitative Übereinstimmung mit dem pharmakologisch aktiven Scharfstoff 6-Gingerol. Die durchgeführte Untersuchung auf
+                per- und polyfluorierte Alkylsubstanzen (PFAS) ergab in keiner der drei untersuchten Proben einen auffälligen Befund. Aus analytischer
+                Sicht ergeben sich keine Hinweise auf eine entsprechende Kontamination oder gezielte chemische Modifikation. Ein anthropogener Eintrag von
+                PFAS kann für alle Proben ausgeschlossen werden. Die chemisch-analytische Sonderprüfung der Probe D&S belegt jedoch einen signifikanten
+                C<sub>2</sub>H<sub>5</sub>OH-Peak. Das chromatografische Profil weist hierbei spezifische Ester- und Begleitalkohol-Rückstände auf,
+                die mit einem fassgelagerten Zuckerrohr-Destillat korrelieren.
+            </p>
+
+        </div>
+    </section>
+
+    <section class="report-section">
+        <h2>Kriminalistischer Abgleich</h2>
+        <p>
+            Die analytischen Ergebnisse wurden mit den vorliegenden Ermittlungsinformationen abgeglichen. Ein Zusammenhang mit der dokumentierten
+            Verabreichung eines nicht näher spezifizierten Hygge-Getränks durch Deputy-D ist nicht auszuschließen. Insbesondere der
+            signifikante C<sub>2</sub>H<sub>5</sub>OH-Peak sowie die nachgewiesenen Ester- und Begleitalkohol-Rückstände der Probe D&S lassen
+            eine entsprechende Verbindung als möglich erscheinen. Eine eindeutige Zuordnung des untersuchten Destillats zu Deputy-D oder zu
+            einem konkreten Ereignis ist anhand der vorliegenden Befunde jedoch nicht möglich.
+        </p>
+    </section>
+
+    <section class="report-section">
+        <h2>Gesamtbewertung</h2>
+        <p>
+            Die untersuchten Proben konnten botanisch und chemisch-analytisch weitgehend eindeutig charakterisiert werden. Die qualitative Übereinstimmung
+            mit 6-Gingerol bestätigt die Zuordnung des pflanzlichen Materials zu Ingwer. Ein anthropogener Eintrag von PFAS konnte für sämtliche untersuchten
+            Proben ausgeschlossen werden. Eine pharmakologische Bewertung des Getränks ist mangels Referenzmaterial nicht möglich.
+        </p>
+    </section>
+
+    <section class="memo report-section">
+        <h2>Aktenvermerk des Zentrallabors</h2>
+        <p>
+            Die PFAS-Spur ist ausgeschlossen. - Das Destillat ist auffällig. Die SOKO Zentrale empfiehlt, die Umstände der dokumentierten Getränkegabe
+            im Rahmen der weiteren Ermittlungen zu berücksichtigen.
+        </p>
+    </section>
+
+    <div class="final-page">
+
+        <div class="signature">
+            <div>
+                <div class="signature-image"></div>
+                <div class="signature-line">19.10.2026</div>
+                <div class="signature-label">Datum</div>
+            </div>
+
+            <div>
+                <div class="signature-image">
+                    <img src="../images/signature.png" alt="Unterschrift">
+                </div>
+                <div class="signature-line"></div>
+                <div class="signature-label">Bearbeiter / Unterschrift</div>
+            </div>
+        </div>
+
+        <section class="status">
+            <strong>Aktenstatus:</strong>
+            <span>☒ abgeschlossen</span>
+            <span>☐ weitere Prüfung</span>
+            <span>☐ geheim</span>
+        </section>
+
+        <footer class="footer">
+            <span>Zentrallabor · Untersuchungsakte</span>
+            <span>Laborbericht 03 · P-6180466</span>
+        </footer>
+
+    </div>
+</main>
+</body>
+</html>

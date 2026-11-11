@@ -6,6 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Laborbericht Nr. 01 – Identität ohne Zweifel?</title>
 <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    @media print {
+      .signature {
+        margin-top: -30px !important;
+      }
+      .status {
+        margin-top: 8px !important;
+      }
+
+      .footer {
+        margin-top: 4px !important;
+        padding-top: 4px !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -24,7 +40,7 @@
   </div>
 
   <h1>Identität ohne Zweifel?</h1>
-  <p class="subtitle">Laborbericht Nr. 01 · Forensische Probenuntersuchung</p>
+
 
   <h2>Stammdaten</h2>
   <div class="metadata">
@@ -87,6 +103,7 @@
     </table>
   </section>
 
+  <section class="interpretation-block">
   <h2>Auswertung und Interpretation</h2>
   <p class="interpretation">
     Der Abgleich der makroskopischen Befunde mit den genetischen Untersuchungsergebnissen ergab eine eindeutige
@@ -98,10 +115,11 @@
     festgestellt wurden. Eine umfassende Aussage über sämtlich denkbaren genetischen Manipulationen ist daraus nicht
     ableitbar.
   </p>
+  </section>
   <h2>Kriminalistischer Abgleich</h2>
   <div class="finding">
     <span class="finding-label">Aktenbezogene Einschätzung</span>
-    Die Probe wurde vermutlich als Praxistest für die Tauglichkeit der Tarnung des Agenten DD gezogen und von CI-Drathen
+    Die Probe wurde vermutlich als Praxistest für die Tauglichkeit der Tarnung des Agenten DD gezogen und von CI-D
     bei der SOKO-Zentrale eingereicht. Ein Hinweis auf eine Verbindung zum Fall Nielsen konnte basierend auf den
     Untersuchungsergebnissen nicht festgestellt werden.
 
@@ -154,10 +172,15 @@
     </div>
   </div>
 
-  <div class="status">
+  <section class="status">
     <strong>Aktenstatus:</strong>
-    <span>☒ Abgeschlossen</span>
-    <span>☐ Weitere Prüfung</span>
-    <span>☐ Geheim</span>
-  </div>
+    <span>☒ abgeschlossen</span>
+    <span>☐ weitere Prüfung</span>
+    <span>☐ geheim</span>
+  </section>
+
+  <footer class="footer">
+    <span>Zentrallabor · Untersuchungsakte</span>
+    <span>Laborbericht 03 · P-6180466</span>
+  </footer>
 </main>

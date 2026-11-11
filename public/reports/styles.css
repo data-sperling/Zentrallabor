@@ -444,7 +444,6 @@ thead th {
         page-break-before: avoid;
     }
 
-    /* More breathing room between sections in print */
     h2 {
         margin-top: 24px;
         margin-bottom: 12px;
@@ -575,4 +574,8 @@ thead th {
 .answer-option:disabled {
     cursor: not-allowed;
     opacity: 0.55;
+}
+
+.experiment-card .card-content h3 {
+    white-space: pre-line !important;
 }
