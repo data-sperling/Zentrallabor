@@ -1,10 +1,10 @@
-# Attributions
+## Attributions
 
-- I used the following software in production of this application
+- The following software was used in the production of this application
 
 
 
-# The initial application scaffold, including:
+### The initial application scaffold, including:
 
 React/Vite interface
 Graph visualizations
@@ -18,7 +18,7 @@ OpenAI: https://openai.com/
 
 
 
-# Computation of Synthetic 1D Proton NMR Data
+### Computation of Synthetic 1D Proton NMR Data
 
 Sample NMR data was generated using: https://www.nmrdb.org/
 Copyright: Luc Patiny
@@ -38,7 +38,7 @@ Y. Binev, J. Aires-de-Sousa, "Structure-Based Predictions of 1H NMR Chemical Shi
 
 
 
-# Computation of Wide-Angle X-ray Diffraction Data
+### Computation of Wide-Angle X-ray Diffraction Data
 
 Sample XRD data was generated using: https://rdf-xrd-calculator.streamlit.app/
 GitHub repository for XRDlicious: https://github.com/bracerino/xrdlicious
@@ -52,6 +52,6 @@ Materials Science. Journal of Applied Crystallography, 2026, 59(4).
 
 
 
-# Concept, Testing, and Design
+### Concept, Testing, and Design
 
 data-sperling: https://github.com/data-sperling
